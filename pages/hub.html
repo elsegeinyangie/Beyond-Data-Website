@@ -1,0 +1,107 @@
+<!-- ===== KNOWLEDGE HUB ===== -->
+      <div class="page-hero">
+        <div class="container">
+          <div class="sec-tag">Knowledge Hub</div>
+          <h1>Intelligence resources &amp; research</h1>
+          <p>Download our latest threat reports, solution guides, and industry briefings. Free access with registration.</p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="container">
+          <div class="kh-filters" id="kh-filters">
+            <button class="kh-filter active" data-type="all">All</button>
+            <button class="kh-filter" data-type="report">Threat reports</button>
+            <button class="kh-filter" data-type="guide">Solution guides</button>
+            <button class="kh-filter" data-type="brief">Intel briefs</button>
+            <button class="kh-filter" data-type="wp">Whitepapers</button>
+          </div>
+          <div class="kh-grid" id="khGrid">
+            <div class="res-card" data-type="report">
+              <span class="res-type t-report">Threat report</span>
+              <h3>Global Cyber Threat Landscape 2025</h3>
+              <p>Analysis of top threat actors, TTPs, and emerging attack vectors observed across the Middle East, Africa, and APAC.</p>
+              <div class="res-meta"><span>42 pages</span><span>Q1 2025</span></div>
+              <button class="dl-btn" onclick="openGate('Global Cyber Threat Landscape 2025')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
+            </div>
+            <div class="res-card" data-type="guide">
+              <span class="res-type t-guide">Solution guide</span>
+              <h3>Digital Risk Protection: A Practitioner's Guide</h3>
+              <p>A practical guide to building a comprehensive DRP programme — brand monitoring, executive protection, and dark web intelligence.</p>
+              <div class="res-meta"><span>28 pages</span><span>2024</span></div>
+              <button class="dl-btn" onclick="openGate('Digital Risk Protection: A Practitioner\'s Guide')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
+            </div>
+            <div class="res-card" data-type="brief">
+              <span class="res-type t-brief">Intel brief</span>
+              <h3>Blockchain Intelligence for Law Enforcement</h3>
+              <p>How agencies are leveraging on-chain analytics and cross-chain tracing to investigate crypto-enabled financial crime.</p>
+              <div class="res-meta"><span>16 pages</span><span>2024</span></div>
+              <button class="dl-btn" onclick="openGate('Blockchain Intelligence for Law Enforcement')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
+            </div>
+            <div class="res-card" data-type="wp">
+              <span class="res-type t-wp">Whitepaper</span>
+              <h3>Intelligence Fusion in National Security Operations</h3>
+              <p>How intelligence fusion platforms enable agencies to correlate CDRs, IPDRs, OSINT, and geolocation data at national scale.</p>
+              <div class="res-meta"><span>34 pages</span><span>2025</span></div>
+              <button class="dl-btn" onclick="openGate('Intelligence Fusion in National Security Operations')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
+            </div>
+            <div class="res-card" data-type="report">
+              <span class="res-type t-report">Threat report</span>
+              <h3>Dark Web Intelligence: Trends &amp; Tactics</h3>
+              <p>Key findings from monitoring dark web forums and marketplaces — sector-specific threat actor activity and data leak patterns.</p>
+              <div class="res-meta"><span>38 pages</span><span>2024</span></div>
+              <button class="dl-btn" onclick="openGate('Dark Web Intelligence: Trends & Tactics')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
+            </div>
+            <div class="res-card" data-type="guide">
+              <span class="res-type t-guide">Solution guide</span>
+              <h3>AML Compliance in the Web3 Era</h3>
+              <p>How financial institutions and VASPs can meet evolving AML and CFT obligations in blockchain and DeFi transactions.</p>
+              <div class="res-meta"><span>22 pages</span><span>2025</span></div>
+              <button class="dl-btn" onclick="openGate('AML Compliance in the Web3 Era')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <site-footer></site-footer>
+
+
+
+
+
+    <!-- FORM MODAL -->
+    <div class="gate-overlay" id="gateOverlay">
+      <div class="gate-modal">
+        <button class="gate-close" onclick="closeGate()">×</button>
+        <div style="width:44px;height:44px;background:rgba(0,194,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg style="width:22px;height:22px;stroke:#00c2ff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24">
+            <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+          </svg>
+        </div>
+        <h3>Access your free resource</h3>
+        <p class="gate-sub">Enter your details to download. We'll email you a copy too.</p>
+        <div class="doc-pill" id="gateDocTitle">Global Cyber Threat Landscape 2025</div>
+        <div class="g-field">
+          <label>Full name *</label>
+          <input id="gName" type="text" placeholder="Your full name" />
+        </div>
+        <div class="g-row">
+          <div class="g-field">
+            <label>Work email *</label>
+            <input id="gEmail" type="email" placeholder="you@company.com" />
+          </div>
+          <div class="g-field">
+            <label>Company</label>
+            <input id="gCompany" type="text" placeholder="Organisation" />
+          </div>
+        </div>
+        <div class="g-consent">
+          <input type="checkbox" id="gConsent" />
+          <label for="gConsent">I agree to Beyond Data's <a href="#">Privacy Policy</a> and consent to being contacted.</label>
+        </div>
+        <button class="btn btn-p" style="width:100%;justify-content:center" onclick="submitGate()">
+          <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round">
+            <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+          </svg>
+          Download now
+        </button>
+      </div>
+    </div>
