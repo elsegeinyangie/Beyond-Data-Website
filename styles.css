@@ -81,8 +81,8 @@ a {
   background: rgba(255, 255, 255, 0.07);
 }
 .nav-cta {
-  background: #1a5fb4;
-  color: #fff;
+  background: #00c2ff;
+  color: #000;
   font-size: 13px;
   font-weight: 500;
   padding: 8px 20px;
@@ -251,7 +251,7 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
 }
 
 /* ============================================================
-   BUTTONS
+  BUTTONS
    ============================================================ */
 .btn {
   display: inline-flex;
@@ -267,11 +267,12 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   transition: all 0.2s;
 }
 .btn-p {
-  background: #1a5fb4;
-  color: #fff;
+  background: #00c2ff;;
+  color: #000;
 }
 .btn-p:hover {
   background: #2470cc;
+  color: #fff;
   transform: translateY(-1px);
 }
 .btn-o {
