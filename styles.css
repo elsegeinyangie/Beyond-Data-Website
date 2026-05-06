@@ -205,17 +205,21 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   margin: 0 auto;
   padding: 0 28px;
 }
+
 .section {
-  padding: 80px 0;
+  padding: 30px 0;
 }
+
 .section-alt {
   background: var(--navy-mid);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
+
 .text-center {
   text-align: center;
 }
+
 .sec-tag {
   display: inline-block;
   font-size: 11px;
@@ -303,14 +307,24 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   justify-content: center;
   margin-bottom: 16px;
 }
-.card-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: #00c2ff;
-  fill: none;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+
+.card-icon img {
+  width: 26px;
+  height: 26px;
+  filter: brightness(0) saturate(100%) invert(55%) sepia(80%) saturate(400%)
+    hue-rotate(170deg) brightness(105%);
+}
+
+.solutions-card-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.solutions-card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 /* ============================================================
@@ -390,12 +404,12 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
 
 .slide-title {
   font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            color: #fff;
-            max-width: 600px;
-            margin-bottom: 18px;
-            line-height: 1.18;
-            letter-spacing: -0.01em;
+  font-weight: 700;
+  color: #fff;
+  max-width: 600px;
+  margin-bottom: 18px;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
 }
 
 /* Content layer inside each slide */
@@ -598,9 +612,30 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   transition: opacity 0.2s;
   flex-shrink: 0;
 }
-.trust-track img:hover {
-  opacity: 0.8;
+
+#partners-3 {
+  height: 44px;
 }
+#partners-4 {
+  height: 48px;
+}
+#partners-6 {
+  height: 38px;
+}
+#partners-7 {
+  height: 40px;
+}
+#partners-8 {
+  height: 44px;
+}
+#partners-9 {
+  height: 44px;
+}
+
+.trust-track img:hover {
+  opacity: 1;
+}
+
 @keyframes slide-logos {
   0% {
     transform: translateX(0);
@@ -884,7 +919,7 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   color: var(--text-muted);
 }
 .srv-list li::before {
-  content: "→";
+  content: ">";
   color: var(--accent);
   font-weight: 700;
   flex-shrink: 0;
@@ -892,9 +927,9 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
 }
 .srv-visual {
   background: var(--navy-card);
-  border: 1px solid var(--border);
+  border: 0.5px solid var(--border);
   border-radius: 14px;
-  padding: 10px;
+
   min-height: 200px;
   display: flex;
   align-items: center;
@@ -910,6 +945,12 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   stroke-linejoin: round;
 }
 
+#solution-1,
+#solution-2,
+#solution-3,
+#solution-4 {
+  scroll-margin-top: 64px;
+}
 /* ============================================================
    KNOWLEDGE HUB
    ============================================================ */
@@ -1646,5 +1687,145 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   }
   .hero-slider-arrows {
     display: none;
+  }
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+:root {
+  --notif-accent: #00c2ff;
+  --notif-inset: 1rem;
+  --check-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 -960 960 960' width='24' fill='%23ffffff'%3E%3Cpath d='M400-314.46 250.46-464 296-509.54l104 104 264-264L709.54-624 400-314.46Z'/%3E%3C/svg%3E");
+}
+
+.notification {
+  color: #e0eaf5;
+  position: fixed;
+  display: flex;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  gap: 1rem;
+  top: 80px;
+  right: 0;
+  margin: var(--notif-inset);
+  width: 22rem;
+  background-color: var(--navy-mid, #0d1f3c);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  max-width: calc(100% - 4rem);
+  z-index: 9999;
+  padding: 1.25rem 1rem 1rem;
+  overflow: clip;
+  transform: translateX(calc(100% + var(--notif-inset)));
+  transition: none;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.notification.show {
+  pointer-events: all;
+  opacity: 1;
+  animation: notifSlideInOut 4s forwards cubic-bezier(0.33, 0, 0.66, 1.33);
+  animation-play-state: var(--animation-play-state, running);
+}
+
+.notification:hover {
+  --animation-play-state: paused;
+}
+
+.notification::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background-color: var(--notif-accent);
+  transform-origin: left;
+  animation: notifCountdown 4s forwards linear;
+  animation-play-state: var(--animation-play-state, running);
+}
+
+.notification__icon {
+  border-radius: 50%;
+  display: block;
+  aspect-ratio: 1;
+  background-size: 1.8rem;
+  background-color: var(--notif-accent);
+  background-image: var(--check-svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 2.4rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notification__body {
+  flex: 1;
+}
+
+.notification__header {
+  color: #fff;
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.notification__text {
+  margin: 0;
+  color: var(--text-muted, rgba(255, 255, 255, 0.55));
+  font-size: 0.8rem;
+}
+
+.notification__action {
+  margin-left: auto;
+}
+
+.notification__action .button {
+  appearance: none;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.notification__action .button:hover {
+  color: #fff;
+}
+
+@keyframes notifSlideInOut {
+  0% {
+    transform: translateX(calc(100% + var(--notif-inset)));
+  }
+  12% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100% + var(--notif-inset)));
+  }
+}
+
+@keyframes notifCountdown {
+  0% {
+    transform: scaleX(1);
+  }
+  12% {
+    transform: scaleX(1);
+  }
+  75% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(0);
   }
 }

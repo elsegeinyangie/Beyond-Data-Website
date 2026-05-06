@@ -139,38 +139,24 @@
           <span class="trust-lbl">Trusted technology partners</span>
           <div class="trust-logos">
             <div class="trust-track">
-              <img src="assets/1.png" alt="Partner 1" /><img
-                src="assets/2.png"
-                alt="Partner 2"
+              <img src="assets/1.png" alt="ThreatVerse" id="partners-1" />
+              <img src="assets/2.png" alt="SAYARI" id="partners-2" />
+              <img src="assets/3.png" alt="Praedisuium" id="partners-3" />
+              <img src="assets/4.png" alt="Cogniware" id="partners-4" />
+              <img src="assets/5.png" alt="GROUP-IB" id="partners-5" />
+              <img src="assets/6.png" alt="Sas" id="partners-6" />
+              <img src="assets/7.png" alt="MEDUSA" id="partners-7" />
+              <img src="assets/8.png" alt="Counter Craft" id="partners-8" />
+              <img src="assets/9.png" alt="Phisme Cofense" id="partners-9" />
+              <img
+                src="assets/10.png"
+                alt="positive technologies"
+                id="partners-10"
               />
-              <img src="assets/3.png" alt="Partner 3" /><img
-                src="assets/4.png"
-                alt="Partner 4"
-              />
-              <img src="assets/5.png" alt="Partner 5" /><img
-                src="assets/6.png"
-                alt="Partner 6"
-              />
-              <img src="assets/7.png" alt="Partner 7" /><img
-                src="assets/8.png"
-                alt="Partner 8"
-              />
-              <img src="assets/1.png" alt="Partner 1" /><img
-                src="assets/2.png"
-                alt="Partner 2"
-              />
-              <img src="assets/3.png" alt="Partner 3" /><img
-                src="assets/4.png"
-                alt="Partner 4"
-              />
-              <img src="assets/5.png" alt="Partner 5" /><img
-                src="assets/6.png"
-                alt="Partner 6"
-              />
-              <img src="assets/7.png" alt="Partner 7" /><img
-                src="assets/8.png"
-                alt="Partner 8"
-              />
+              <img src="assets/11.png" alt="Chainalysis" id="partners-11" />
+              <img src="assets/12.png" alt="BlackBerry" id="partners-12" />
+              <img src="assets/13.png" alt="DeXpose" id="partners-13" />
+              <img src="assets/14.png" alt="Sonic Wall" id="partners-14" />
             </div>
           </div>
         </div>
@@ -189,112 +175,110 @@
           </div>
           <div class="sol-grid">
             <div class="sol-card">
-              <div class="sol-num">01 / CTI</div>
+              <div class="sol-num">01</div>
               <div class="card-icon">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
-                  />
-                </svg>
+                <img src="assets/icons/cti-solution-icon.png" alt="" />
               </div>
-              <h3
-                style="
-                  font-size: 15px;
-                  font-weight: 500;
-                  color: #fff;
-                  margin-bottom: 8px;
-                "
-              >
-                Cyber Threat Intelligence
-              </h3>
-              <p style="font-size: 13px; color: var(--text-muted)">
+              <h3 class="solutions-card-title">Cyber Threat Intelligence</h3>
+              <p class="solutions-card-desc">
                 Track threat actors, analyse TTPs, and automate incident
                 response using intelligence from open, deep, and dark web
                 sources.
               </p>
-              <div class="sol-link" onclick="show('solutions')">
+              <div
+                class="sol-link"
+                onclick="
+                  show('solutions');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('solution-1')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                "
+              >
                 Learn more →
               </div>
             </div>
+
             <div class="sol-card">
-              <div class="sol-num">02 / DRP</div>
+              <div class="sol-num">02</div>
               <div class="card-icon">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z"
-                  />
-                  <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+                <img src="assets/icons/digital-risk-solution-icon.png" alt="" />
               </div>
-              <h3
-                style="
-                  font-size: 15px;
-                  font-weight: 500;
-                  color: #fff;
-                  margin-bottom: 8px;
-                "
-              >
-                Digital Risk Protection
-              </h3>
-              <p style="font-size: 13px; color: var(--text-muted)">
+              <h3 class="solutions-card-title">Digital Risk Protection</h3>
+              <p class="solutions-card-desc">
                 Monitor your brand, executives, and digital assets — detect
                 impersonation, phishing, and data leaks before they escalate.
               </p>
-              <div class="sol-link" onclick="show('solutions')">
+              <div
+                class="sol-link"
+                onclick="
+                  show('solutions');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('solution-2')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                "
+              >
                 Learn more →
               </div>
             </div>
             <div class="sol-card">
-              <div class="sol-num">03 / WEB3</div>
+              <div class="sol-num">03</div>
               <div class="card-icon">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-                  />
-                </svg>
+                <img src="assets/icons/blockchain-solution-icon.png" alt="" />
               </div>
-              <h3
-                style="
-                  font-size: 15px;
-                  font-weight: 500;
-                  color: #fff;
-                  margin-bottom: 8px;
-                "
-              >
+              <h3 class="solution-card-title">
                 Blockchain &amp; Web 3.0 Intelligence
               </h3>
               <p style="font-size: 13px; color: var(--text-muted)">
                 Cross-chain fund tracing, AML compliance, and smart contract
                 security — full transparency in the decentralised economy.
               </p>
-              <div class="sol-link" onclick="show('solutions')">
+              <div
+                class="sol-link"
+                onclick="
+                  show('solutions');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('solution-3')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                "
+              >
                 Learn more →
               </div>
             </div>
             <div class="sol-card">
-              <div class="sol-num">04 / FUSION</div>
+              <div class="sol-num">04</div>
               <div class="card-icon">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-                  />
-                </svg>
+                <img src="assets/icons/Data-Fusion-Solution-Icon.png" alt="" />
               </div>
-              <h3
-                style="
-                  font-size: 15px;
-                  font-weight: 500;
-                  color: #fff;
-                  margin-bottom: 8px;
-                "
-              >
-                Intelligence Fusion
-              </h3>
-              <p style="font-size: 13px; color: var(--text-muted)">
+              <h3 class="solutions-card-title">Intelligence Fusion</h3>
+              <p class="solutions-card-desc">
                 OSINT, CDR/IPDR analytics, list screening, and investigative
                 tools — fusing fragmented data into actionable intelligence.
               </p>
-              <div class="sol-link" onclick="show('solutions')">
+              <div
+                class="sol-link"
+                onclick="
+                  show('solutions');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('solution-4')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                "
+              >
                 Learn more →
               </div>
             </div>
@@ -318,9 +302,7 @@
           >
             <div class="card">
               <div class="card-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <img src="assets/icons/why-choose-us-icon-1.png" alt="" />
               </div>
               <h3
                 style="
@@ -330,20 +312,18 @@
                   margin-bottom: 8px;
                 "
               >
-                A decade of global excellence
+                A Decade of Global Excellence
               </h3>
               <p style="font-size: 13px; color: var(--text-muted)">
-                Founded in 2013, over a decade of specialised expertise serving
-                governments and enterprises across three continents.
+                Founded in 2013, Beyond Data is a premier value-added
+                distributor with deep domain knowledge in intelligence,
+                investigation and data fusion, delivering niche solutions and
+                expert services to government entities and large enterprises.
               </p>
             </div>
             <div class="card">
               <div class="card-icon">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375"
-                  />
-                </svg>
+                <img src="assets/icons/why-choose-us-icon-2.png" alt="" />
               </div>
               <h3
                 style="
@@ -362,11 +342,7 @@
             </div>
             <div class="card">
               <div class="card-icon">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
-                  />
-                </svg>
+                <img src="assets/icons/why-choose-us-icon-3.png" alt="" />
               </div>
               <h3
                 style="
@@ -397,6 +373,31 @@
     <div class="view" id="view-services"></div>
     <div class="view" id="view-hub"></div>
     <div class="view" id="view-contact"></div>
+
+    <div
+      id="notification"
+      class="notification"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="notification__icon"></div>
+      <div class="notification__body">
+        <h2 class="notification__header" id="notif-header">Success</h2>
+        <p class="notification__text" id="notif-text">
+          Your changes have been saved
+        </p>
+      </div>
+      <div class="notification__action">
+        <button
+          class="button"
+          aria-label="dismiss this notification"
+          onclick="dismissNotif()"
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+    </div>
 
     <script src="main.js"></script>
   </body>

@@ -1,107 +1,155 @@
-<!-- ===== KNOWLEDGE HUB ===== -->
-      <div class="page-hero">
-        <div class="container">
-          <div class="sec-tag">Knowledge Hub</div>
-          <h1>Intelligence resources &amp; research</h1>
-          <p>Download our latest threat reports, solution guides, and industry briefings. Free access with registration.</p>
-        </div>
-      </div>
-      <div class="section">
-        <div class="container">
-          <div class="kh-filters" id="kh-filters">
-            <button class="kh-filter active" data-type="all">All</button>
-            <button class="kh-filter" data-type="report">Threat reports</button>
-            <button class="kh-filter" data-type="guide">Solution guides</button>
-            <button class="kh-filter" data-type="brief">Intel briefs</button>
-            <button class="kh-filter" data-type="wp">Whitepapers</button>
-          </div>
-          <div class="kh-grid" id="khGrid">
-            <div class="res-card" data-type="report">
-              <span class="res-type t-report">Threat report</span>
-              <h3>Global Cyber Threat Landscape 2025</h3>
-              <p>Analysis of top threat actors, TTPs, and emerging attack vectors observed across the Middle East, Africa, and APAC.</p>
-              <div class="res-meta"><span>42 pages</span><span>Q1 2025</span></div>
-              <button class="dl-btn" onclick="openGate('Global Cyber Threat Landscape 2025')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
-            </div>
-            <div class="res-card" data-type="guide">
-              <span class="res-type t-guide">Solution guide</span>
-              <h3>Digital Risk Protection: A Practitioner's Guide</h3>
-              <p>A practical guide to building a comprehensive DRP programme — brand monitoring, executive protection, and dark web intelligence.</p>
-              <div class="res-meta"><span>28 pages</span><span>2024</span></div>
-              <button class="dl-btn" onclick="openGate('Digital Risk Protection: A Practitioner\'s Guide')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
-            </div>
-            <div class="res-card" data-type="brief">
-              <span class="res-type t-brief">Intel brief</span>
-              <h3>Blockchain Intelligence for Law Enforcement</h3>
-              <p>How agencies are leveraging on-chain analytics and cross-chain tracing to investigate crypto-enabled financial crime.</p>
-              <div class="res-meta"><span>16 pages</span><span>2024</span></div>
-              <button class="dl-btn" onclick="openGate('Blockchain Intelligence for Law Enforcement')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
-            </div>
-            <div class="res-card" data-type="wp">
-              <span class="res-type t-wp">Whitepaper</span>
-              <h3>Intelligence Fusion in National Security Operations</h3>
-              <p>How intelligence fusion platforms enable agencies to correlate CDRs, IPDRs, OSINT, and geolocation data at national scale.</p>
-              <div class="res-meta"><span>34 pages</span><span>2025</span></div>
-              <button class="dl-btn" onclick="openGate('Intelligence Fusion in National Security Operations')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
-            </div>
-            <div class="res-card" data-type="report">
-              <span class="res-type t-report">Threat report</span>
-              <h3>Dark Web Intelligence: Trends &amp; Tactics</h3>
-              <p>Key findings from monitoring dark web forums and marketplaces — sector-specific threat actor activity and data leak patterns.</p>
-              <div class="res-meta"><span>38 pages</span><span>2024</span></div>
-              <button class="dl-btn" onclick="openGate('Dark Web Intelligence: Trends & Tactics')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
-            </div>
-            <div class="res-card" data-type="guide">
-              <span class="res-type t-guide">Solution guide</span>
-              <h3>AML Compliance in the Web3 Era</h3>
-              <p>How financial institutions and VASPs can meet evolving AML and CFT obligations in blockchain and DeFi transactions.</p>
-              <div class="res-meta"><span>22 pages</span><span>2025</span></div>
-              <button class="dl-btn" onclick="openGate('AML Compliance in the Web3 Era')"><svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download free</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <site-footer></site-footer>
+<div class="page-hero">
+  <div class="container">
+    <div class="sec-tag">Knowledge Hub</div>
+    <h1>Intelligence resources</h1>
+    <p>Briefings, reports, and research from the Beyond Data team.</p>
+  </div>
+</div>
 
-
-
-
-
-    <!-- FORM MODAL -->
-    <div class="gate-overlay" id="gateOverlay">
-      <div class="gate-modal">
-        <button class="gate-close" onclick="closeGate()">×</button>
-        <div style="width:44px;height:44px;background:rgba(0,194,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
-          <svg style="width:22px;height:22px;stroke:#00c2ff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24">
-            <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
-          </svg>
-        </div>
-        <h3>Access your free resource</h3>
-        <p class="gate-sub">Enter your details to download. We'll email you a copy too.</p>
-        <div class="doc-pill" id="gateDocTitle">Global Cyber Threat Landscape 2025</div>
-        <div class="g-field">
-          <label>Full name *</label>
-          <input id="gName" type="text" placeholder="Your full name" />
-        </div>
-        <div class="g-row">
-          <div class="g-field">
-            <label>Work email *</label>
-            <input id="gEmail" type="email" placeholder="you@company.com" />
-          </div>
-          <div class="g-field">
-            <label>Company</label>
-            <input id="gCompany" type="text" placeholder="Organisation" />
-          </div>
-        </div>
-        <div class="g-consent">
-          <input type="checkbox" id="gConsent" />
-          <label for="gConsent">I agree to Beyond Data's <a href="#">Privacy Policy</a> and consent to being contacted.</label>
-        </div>
-        <button class="btn btn-p" style="width:100%;justify-content:center" onclick="submitGate()">
-          <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round">
-            <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
-          </svg>
-          Download now
-        </button>
-      </div>
+<div class="section">
+  <div class="container">
+    <div id="hub-loading" style="text-align:center;padding:60px 0;color:var(--text-muted);font-size:14px">
+      Loading resources…
     </div>
+    <div class="res-grid" id="hubGrid" style="display:none;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px"></div>
+    <div id="hub-empty" style="display:none;text-align:center;padding:60px 0;color:var(--text-muted);font-size:14px">
+      No resources available yet. Check back soon.
+    </div>
+  </div>
+</div>
+
+<site-footer></site-footer>
+
+
+
+
+
+<script type="module">
+import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, increment, addDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyALFwIt7_koP1zaN7XP-kjvZHi1yaKOfB4",
+  authDomain:        "beyond-data-1013d.firebaseapp.com",
+  projectId:         "beyond-data-1013d",
+  storageBucket:     "beyond-data-1013d.firebasestorage.app",
+  messagingSenderId: "921236694715",
+  appId:             "1:921236694715:web:c1d16affcaca65befa2b9e",
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+function typeIcon(type) {
+  const icons = {
+    pdf:  `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#ff4d6a;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>`,
+    docx: `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#00c2ff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>`,
+    link: `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#00d97e;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>`,
+  };
+  return icons[type] || icons.pdf;
+}
+
+async function loadHub() {
+  try {
+    const snap = await getDocs(query(collection(db, 'files'), orderBy('createdAt', 'desc')));
+    document.getElementById('hub-loading').style.display = 'none';
+
+    if (snap.empty) {
+      document.getElementById('hub-empty').style.display = 'block';
+      return;
+    }
+
+    const grid = document.getElementById('hubGrid');
+    grid.style.display = 'grid';
+    grid.innerHTML = snap.docs.map(d => {
+      const f = d.data();
+      return `
+        <div class="res-card" style="background:var(--navy-mid);border:1px solid var(--border);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px">
+            ${typeIcon(f.type)}
+            <span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted)">${f.type.toUpperCase()}</span>
+          </div>
+          <h3 style="font-size:15px;font-weight:600;color:#fff;line-height:1.4">${f.title}</h3>
+          ${f.description ? `<p style="font-size:13px;color:var(--text-muted);line-height:1.6">${f.description}</p>` : ''}
+          <div style="margin-top:auto;padding-top:8px">
+            <button
+              class="btn btn-p"
+              style="font-size:13px;padding:9px 18px;display:inline-flex;align-items:center;gap:8px"
+              onclick="window._openHubGate('${d.id}', '${f.title.replace(/'/g,"\\'")}', '${f.type}')">
+              <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              Download
+            </button>
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    document.getElementById('hub-loading').textContent = 'Failed to load resources.';
+    console.error(e);
+  }
+}
+
+// Called by the gate modal after user fills form
+window._hubPendingDownload = null;
+
+window._openHubGate = function(fileId, fileTitle, fileType) {
+  window._hubPendingDownload = { fileId, fileTitle, fileType };
+  if (typeof openGate === 'function') openGate(fileTitle);
+};
+
+// This is called by submitGate() in main.js after form submit
+window._completeHubDownload = async function(userName, userEmail, userCompany) {
+  const pending = window._hubPendingDownload;
+  if (!pending) return;
+
+  try {
+    // 1. Log the download to Firestore
+    await addDoc(collection(db, 'downloads'), {
+      name:        userName,
+      email:       userEmail,
+      company:     userCompany || '',
+      fileId:      pending.fileId,
+      fileTitle:   pending.fileTitle,
+      downloadedAt: new Date(),
+    });
+
+    // 2. Increment download counter on the file
+    await updateDoc(doc(db, 'files', pending.fileId), {
+      downloadCount: increment(1)
+    });
+
+    // 3. Get the file and trigger download
+    const snap = await getDocs(collection(db, 'files'));
+    const fileDoc = snap.docs.find(d => d.id === pending.fileId);
+    if (fileDoc) {
+      const f = fileDoc.data();
+      if (f.externalUrl) {
+        window.open(f.externalUrl, '_blank');
+      } else if (f.base64) {
+        const a = document.createElement('a');
+        a.href     = f.base64;
+        a.download = f.fileName || f.title;
+        a.click();
+      }
+    }
+
+    // 4. Send email notification via FormSubmit
+    const formData = new FormData();
+    formData.append("Name",     userName);
+    formData.append("Email",    userEmail);
+    formData.append("Company",  userCompany || "Not provided");
+    formData.append("File",     pending.fileTitle);
+    formData.append("_subject", "📥 New Download — " + pending.fileTitle);
+    formData.append("_template","table");
+    fetch("https://formsubmit.co/ajax/angieelsegeiny@gmail.com", {
+      method: "POST", body: formData
+    }).catch(() => {});
+
+  } catch(err) {
+    console.error('Download error:', err);
+  }
+
+  window._hubPendingDownload = null;
+};
+
+loadHub();
+</script>
