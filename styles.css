@@ -94,6 +94,7 @@ a {
 }
 .nav-cta:hover {
   background: #2470cc;
+  color: #fff;
 }
 .hamburger {
   display: none;
