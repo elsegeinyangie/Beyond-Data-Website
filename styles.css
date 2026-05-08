@@ -1842,3 +1842,15 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
 .video-fade.faded {
   opacity: 0;
 }
+
+
+@keyframes videoLoopFade {
+  0%   { opacity: 0; filter: blur(18px); }
+  8%   { opacity: 1; filter: blur(0);    }
+  92%  { opacity: 1; filter: blur(0);    }
+  100% { opacity: 0; filter: blur(18px); }
+}
+/* 
+#heroSliderSection video {
+  animation: videoLoopFade 8.27s linear infinite;
+} */

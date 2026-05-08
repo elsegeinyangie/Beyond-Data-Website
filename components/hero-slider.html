@@ -1,6 +1,6 @@
 <section class="hero-slider-section" id="heroSliderSection">
   <!-- ─── Slide 1 (current content from the screenshot) ─── -->
-  <div class="hero-slide"  id="slide-bg">
+  <div class="hero-slide" id="slide-bg" >
     <video
     autoplay
     loop
@@ -14,7 +14,7 @@
       object-fit: cover;
       z-index: 0;
     ">
-    <source src="assets/slider-bg-vid-1.webm" type="video/webm" />
+    <source src="assets/slider-bg-vid-3.webm" type="video/webm" />
     </video>
     <div class="hero-slide-content">
       <div class="container" style="padding-top: 100px; padding-bottom: 72px">
@@ -31,7 +31,7 @@
   </div>
 
   <!-- ─── Slide 2 — replace content / data-bg as needed ─── -->
-  <div class="hero-slide" id="slide-bg">
+  <div class="hero-slide" id="slide-bg" >
     <video
     autoplay
     muted
@@ -46,7 +46,7 @@
       z-index: 0;
     "
   >
-    <source src="assets/slider-bg-vid-1.webm" type="video/webm" />
+    <source src="assets/slider-bg-vid-3.webm" type="video/webm" />
   </video>
     <div class="hero-slide-content">
       <div class="container" style="padding-top: 100px; padding-bottom: 72px">
@@ -67,7 +67,7 @@
   </div>
 
   <!-- ─── Slide 3 — replace content / data-bg as needed ─── -->
-  <div class="hero-slide" data-bg="assets/slider-bg-vid-1.webm" id="slide-bg">
+  <div class="hero-slide" id="slide-bg" >
     <video
       autoplay
       muted
@@ -82,7 +82,7 @@
         z-index: 0;
       "
     >
-      <source src="assets/slider-bg-vid-1.webm" type="video/webm" />
+      <source src="assets/slider-bg-vid-3.webm" type="video/webm" />
     </video>
     <div class="hero-slide-content">
       <div class="container" style="padding-top: 100px; padding-bottom: 72px">
@@ -111,3 +111,77 @@
   <div class="hero-slider-dots"></div>
 </section>
 <!-- END HERO SLIDER -->
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.getElementById('heroSliderSection');
+  if (!slider) return;
+
+  const slides = Array.from(slider.querySelectorAll('.hero-slide'));
+  if (slides.length === 0) return;
+
+  let currentIndex = 0;
+
+  function goToSlide(index) {
+    // Deactivate all slides & pause their videos
+    slides.forEach((slide) => {
+      slide.classList.remove('active');
+      const video = slide.querySelector('video');
+      if (video) {
+        video.pause();
+        video.currentTime = 0; // Reset to start for next loop
+      }
+    });
+
+    // Wrap index for infinite loop
+    currentIndex = ((index % slides.length) + slides.length) % slides.length;
+    const activeSlide = slides[currentIndex];
+    activeSlide.classList.add('active');
+
+    // Play the active slide's video
+    const activeVideo = activeSlide.querySelector('video');
+    if (activeVideo) {
+      activeVideo.muted = true; // Required for autoplay in modern browsers
+      activeVideo.play().catch(() => console.warn('Video autoplay blocked'));
+    }
+
+    // Sync dots
+    const dots = slider.querySelectorAll('.hero-slider-dots button');
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+  }
+
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
+
+  // Attach `ended` listener to every slide's video
+  slides.forEach((slide) => {
+    const video = slide.querySelector('video');
+    if (video) {
+      video.loop = false; // Prevent native looping
+      video.addEventListener('ended', nextSlide);
+    }
+  });
+
+  // Arrow navigation
+  const arrows = slider.querySelector('.hero-slider-arrows');
+  if (arrows) {
+    const btns = arrows.querySelectorAll('button');
+    if (btns[0]) btns[0].addEventListener('click', prevSlide);
+    if (btns[1]) btns[1].addEventListener('click', nextSlide);
+  }
+
+  // Dot navigation
+  slider.querySelectorAll('.hero-slider-dots button').forEach((dot, i) => {
+    dot.addEventListener('click', () => goToSlide(i));
+  });
+
+  // Initialize first slide
+  goToSlide(0);
+});
+</script>

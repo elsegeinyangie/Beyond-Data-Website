@@ -167,7 +167,7 @@ async function completeHubDownload(userName, userEmail, userCompany) {
     formData.append("Email",     userEmail);
     formData.append("Company",   userCompany || "Not provided");
     formData.append("File",      pending.fileTitle);
-    formData.append("_subject",  "📥 New Download — " + pending.fileTitle);
+    formData.append("_subject", "New Download — " + pending.fileTitle);
     formData.append("_template", "table");
     fetch("https://formsubmit.co/ajax/letstalk@beyond-data.net", {
       method: "POST", body: formData
@@ -289,7 +289,7 @@ function submitGate() {
   // Complete the hub download (logs to Firestore + triggers file + sends email)
   completeHubDownload(n, em, co);
 
-  showNotif("Download ready 🎉", "Thank you " + n + "! We'll email a copy to " + em + ".");
+  showNotif("Download Ready!", "Thank you " + n + "! We'll email a copy to " + em + ".");
 }
 
 function prefillGate() {
