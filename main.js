@@ -257,6 +257,12 @@ document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") closeGate();
 });
 
+const PERSONAL_DOMAINS = new Set([
+  'gmail.com','yahoo.com','hotmail.com','outlook.com','live.com','icloud.com',
+  'me.com','mac.com','aol.com','protonmail.com','proton.me','mail.com',
+  'zoho.com','yandex.com','gmx.com','inbox.com','rediffmail.com','msn.com',
+]);
+
 function submitGate() {
   const n  = document.getElementById("gName").value.trim();
   const em = document.getElementById("gEmail").value.trim();
@@ -265,6 +271,12 @@ function submitGate() {
 
   if (!n || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em) || !c) {
     showNotif("Missing details", "Please fill in your name, a valid email, and agree to the Privacy Policy.");
+    return;
+  }
+
+  const domain = em.split('@')[1].toLowerCase();
+  if (PERSONAL_DOMAINS.has(domain)) {
+    showNotif("Work email required", "Please use your work email address to download this resource.");
     return;
   }
 
@@ -543,7 +555,6 @@ class SiteFooter extends HTMLElement {
 }
 
 customElements.define('site-footer', SiteFooter);
-
 
 /* ── Load hero slider component ──────────────────────────── */
 async function loadComponents() {

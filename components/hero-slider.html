@@ -3,8 +3,8 @@
   <div class="hero-slide"  id="slide-bg">
     <video
     autoplay
+    loop
     muted
-
     playsinline
     style="
       position: absolute;
@@ -14,7 +14,7 @@
       object-fit: cover;
       z-index: 0;
     ">
-    <source src="assets/slide-1-video.mp4" type="video/mp4" />
+    <source src="assets/slider-bg-vid-1.webm" type="video/webm" />
     </video>
     <div class="hero-slide-content">
       <div class="container" style="padding-top: 100px; padding-bottom: 72px">
@@ -31,7 +31,7 @@
   </div>
 
   <!-- ─── Slide 2 — replace content / data-bg as needed ─── -->
-  <div class="hero-slide">
+  <div class="hero-slide" id="slide-bg">
     <video
     autoplay
     muted
@@ -46,7 +46,7 @@
       z-index: 0;
     "
   >
-    <source src="assets/slide-2-video.mp4" type="video/mp4" />
+    <source src="assets/slider-bg-vid-1.webm" type="video/webm" />
   </video>
     <div class="hero-slide-content">
       <div class="container" style="padding-top: 100px; padding-bottom: 72px">
@@ -67,8 +67,23 @@
   </div>
 
   <!-- ─── Slide 3 — replace content / data-bg as needed ─── -->
-  <div class="hero-slide" data-bg="assets/slide-3-image.png" id="slide-bg">
-    <div class="hero-slide-bg"></div>
+  <div class="hero-slide" data-bg="assets/slider-bg-vid-1.webm" id="slide-bg">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      style="
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+      "
+    >
+      <source src="assets/slider-bg-vid-1.webm" type="video/webm" />
+    </video>
     <div class="hero-slide-content">
       <div class="container" style="padding-top: 100px; padding-bottom: 72px">
         <!-- <div class="hero-tag">

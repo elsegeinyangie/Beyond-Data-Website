@@ -96,6 +96,7 @@ a {
   background: #2470cc;
   color: #fff;
 }
+
 .hamburger {
   display: none;
   flex-direction: column;
@@ -385,7 +386,6 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   background: linear-gradient(
     100deg,
     rgba(11, 22, 40, 1) 0%,
-    rgba(11, 22, 40, 1) 30%,
     rgba(11, 22, 40, 0.7) 50%,
     rgba(11, 22, 40, 0) 85%
   );
@@ -1753,13 +1753,13 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
 .notification__icon {
   border-radius: 50%;
   display: block;
-  aspect-ratio: 1;
   background-size: 1.8rem;
   background-color: var(--notif-accent);
   background-image: var(--check-svg);
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 2.4rem;
+  height: 2.4rem;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -1830,4 +1830,15 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   100% {
     transform: scaleX(0);
   }
+}
+
+
+.video-fade {
+  transition: opacity 1.8s ease, filter 1.8s ease;
+  opacity: 1;
+  filter: blur(0);
+}
+
+.video-fade.faded {
+  opacity: 0;
 }
