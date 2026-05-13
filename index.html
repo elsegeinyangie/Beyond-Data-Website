@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Beyond Data</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="assets/icons/logo.png" />
   </head>
   <body>
     <!-- NAV -->
@@ -12,7 +13,7 @@
       <div class="nav-inner">
         <div onclick="show('home')" style="cursor: pointer">
           <img
-            src="assets/full-logo.png"
+            src="assets/icons/full-logo.png"
             alt="Beyond Data"
             style="height: 5rem; width: auto; display: block"
           />
@@ -98,8 +99,16 @@
         <div class="g-consent">
           <input type="checkbox" id="gConsent" />
           <label for="gConsent"
-            >I agree to Beyond Data's <a href="#">Privacy Policy</a> and consent
-            to being contacted.</label
+            >I agree to Beyond Data's
+            <a
+              href="#"
+              onclick="
+                event.preventDefault();
+                openPP();
+              "
+              >Privacy Policy</a
+            >
+            and consent to being contacted.</label
           >
         </div>
         <button
@@ -128,6 +137,52 @@
       </div>
     </div>
 
+    <!-- PRIVACY POLICY MODAL -->
+    <div class="pp-overlay" id="ppOverlay">
+      <div class="pp-modal">
+        <div class="pp-modal-header">
+          <h3>
+            <svg
+              style="
+                width: 18px;
+                height: 18px;
+                stroke: #00c2ff;
+                fill: none;
+                stroke-width: 1.5;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+              "
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+              />
+            </svg>
+            Privacy Policy
+          </h3>
+          <button class="pp-modal-close" onclick="closePP()" aria-label="Close">
+            ×
+          </button>
+        </div>
+        <div class="pp-modal-body">
+          <iframe
+            id="ppIframe"
+            src=""
+            title="Beyond Data Privacy Policy"
+          ></iframe>
+        </div>
+        <div class="pp-modal-footer">
+          <!-- <button
+            class="btn btn-p"
+            style="font-size: 13px; padding: 9px 20px"
+            onclick="closePP()"
+          >
+            Close
+          </button> -->
+        </div>
+      </div>
+    </div>
+
     <!-- ===== HOME ===== -->
     <div class="view active" id="view-home">
       <!-- Hero slider is fetched and injected here by loadComponents() in main.js -->
@@ -139,24 +194,60 @@
           <span class="trust-lbl">Trusted technology partners</span>
           <div class="trust-logos">
             <div class="trust-track">
-              <img src="assets/1.png" alt="ThreatVerse" id="partners-1" />
-              <img src="assets/2.png" alt="SAYARI" id="partners-2" />
-              <img src="assets/3.png" alt="Praedisuium" id="partners-3" />
-              <img src="assets/4.png" alt="Cogniware" id="partners-4" />
-              <img src="assets/5.png" alt="GROUP-IB" id="partners-5" />
-              <img src="assets/6.png" alt="Sas" id="partners-6" />
-              <img src="assets/7.png" alt="MEDUSA" id="partners-7" />
-              <img src="assets/8.png" alt="Counter Craft" id="partners-8" />
-              <img src="assets/9.png" alt="Phisme Cofense" id="partners-9" />
               <img
-                src="assets/10.png"
+                src="assets/partners/1.png"
+                alt="ThreatVerse"
+                id="partners-1"
+              />
+              <img src="assets/partners/2.png" alt="SAYARI" id="partners-2" />
+              <img
+                src="assets/partners/3.png"
+                alt="Praedisuium"
+                id="partners-3"
+              />
+              <img
+                src="assets/partners/4.png"
+                alt="Cogniware"
+                id="partners-4"
+              />
+              <img src="assets/partners/5.png" alt="GROUP-IB" id="partners-5" />
+              <img src="assets/partners/6.png" alt="Sas" id="partners-6" />
+              <img src="assets/partners/7.png" alt="MEDUSA" id="partners-7" />
+              <img
+                src="assets/partners/8.png"
+                alt="Counter Craft"
+                id="partners-8"
+              />
+              <img
+                src="assets/partners/9.png"
+                alt="Phisme Cofense"
+                id="partners-9"
+              />
+              <img
+                src="assets/partners/10.png"
                 alt="positive technologies"
                 id="partners-10"
               />
-              <img src="assets/11.png" alt="Chainalysis" id="partners-11" />
-              <img src="assets/12.png" alt="BlackBerry" id="partners-12" />
-              <img src="assets/13.png" alt="DeXpose" id="partners-13" />
-              <img src="assets/14.png" alt="Sonic Wall" id="partners-14" />
+              <img
+                src="assets/partners/11.png"
+                alt="Chainalysis"
+                id="partners-11"
+              />
+              <img
+                src="assets/partners/12.png"
+                alt="BlackBerry"
+                id="partners-12"
+              />
+              <img
+                src="assets/partners/13.png"
+                alt="DeXpose"
+                id="partners-13"
+              />
+              <img
+                src="assets/partners/14.png"
+                alt="Sonic Wall"
+                id="partners-14"
+              />
             </div>
           </div>
         </div>
@@ -233,7 +324,7 @@
               <div class="card-icon">
                 <img src="assets/icons/blockchain-solution-icon.png" alt="" />
               </div>
-              <h3 class="solution-card-title">
+              <h3 class="solutions-card-title">
                 Blockchain &amp; Web 3.0 Intelligence
               </h3>
               <p style="font-size: 13px; color: var(--text-muted)">
@@ -333,11 +424,13 @@
                   margin-bottom: 8px;
                 "
               >
-                Unified intelligence &amp; fusion
+                Unified Intelligence Fusion
               </h3>
               <p style="font-size: 13px; color: var(--text-muted)">
-                AI-powered engines fuse cyber, fraud, brand, blockchain, and
-                geolocation intelligence into a single actionable pane of glass.
+                Our integrative solutions and service portfolio delivers
+                reliable and robust systems leveraging AI-powered engines to
+                fuse fragmented data to transform disparate clues into
+                comprehensive, actionable investigations.
               </p>
             </div>
             <div class="card">
@@ -355,8 +448,10 @@
                 Strategic global alliances
               </h3>
               <p style="font-size: 13px; color: var(--text-muted)">
-                We partner exclusively with world-class vendors — giving clients
-                access to the most advanced capabilities available anywhere.
+                We partner with a premier
+                network of international technology vendors ensuring our clients
+                have access to the world's most advanced defense and
+                investigation capabilities
               </p>
             </div>
           </div>

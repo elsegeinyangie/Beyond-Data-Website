@@ -30,6 +30,18 @@ function dismissNotif() {
   clearTimeout(notifTimer);
 }
 
+/* ── Solutions accordion ─────────────────────────────────── */
+function toggleSrv(btn) {
+  const item = btn.closest('.srv-item');
+  if (!item) return;
+  const list = item.closest('.srv-list');
+  if (!list) return;
+
+  const isOpen = item.classList.contains('open');
+  list.querySelectorAll('.srv-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
 
 /* ── Firebase (Firestore for hub) ────────────────────────── */
 import('https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js').then(({ initializeApp }) => {
@@ -441,7 +453,7 @@ function cfReset() {
    HERO SLIDER
    ============================================================ */
 function initHeroSlider() {
-  const INTERVAL = 5000;
+  const INTERVAL = 9000;
 
   const section = document.getElementById("heroSliderSection");
   if (!section) return;
@@ -518,10 +530,10 @@ class SiteFooter extends HTMLElement {
         <div class="container">
           <div class="footer-grid">
             <div class="footer-brand" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
-              <img src="assets/full-logo.png" alt="Beyond Data" style="height:8rem;width:auto" />
+              <img src="assets/icons/full-logo.png" alt="Beyond Data" style="height:8rem;width:auto" />
             </div>
             <div class="footer-col">
-              <h4>Solutions</h4>
+              <h4 style="color: #00c2ff;">Solutions</h4>
               <ul>
                 <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-1').scrollIntoView({behavior:'smooth'}), 100)">Cyber Threat Intelligence</a></li>
                 <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-2').scrollIntoView({behavior:'smooth'}), 100)">Digital Risk Protection</a></li>
@@ -530,7 +542,7 @@ class SiteFooter extends HTMLElement {
               </ul>
             </div>
             <div class="footer-col">
-              <h4>Company</h4>
+              <h4 style="color: #00c2ff;">Company</h4>
               <ul>
                 <li><a onclick="show('about')">About Us</a></li>
                 <li><a onclick="show('services')">Services</a></li>
@@ -539,20 +551,46 @@ class SiteFooter extends HTMLElement {
               </ul>
             </div>
             <div class="footer-col">
-              <h4>Global offices</h4>
-              <div class="office"><strong>Middle East</strong>Dubai South, Dubai, UAE</div>
-              <div class="office"><strong>Africa</strong>New Cairo, Cairo, Egypt</div>
-              <div class="office"><strong>APAC</strong>Sydney, NSW, Australia</div>
+              <h4 style="color: #00c2ff;">Global offices</h4>
+              <div class="office"><strong>Middle East</strong>Dubai, UAE</div>
+              <div class="office"><strong>Africa</strong>Cairo, Egypt</div>
+              <div class="office"><strong>APAC</strong>Sydney, Australia</div>
             </div>
           </div>
           <div class="footer-bottom">
             <p>&copy; 2026 Beyond Data. All rights reserved.</p>
-            <div class="footer-bottom-links"><a>Privacy Policy</a><a>Terms of Use</a></div>
+            <div class="footer-bottom-links"><a href="#" onclick="event.preventDefault(); openPP()">Privacy Policy</a></div>
           </div>
         </div>
       </footer>`;
   }
 }
+
+/* ── Privacy Policy Modal ────────────────────────────────── */
+function openPP() {
+  const iframe = document.getElementById('ppIframe');
+  // Load the PDF only on first open to avoid unnecessary requests
+  if (!iframe.src || iframe.src === window.location.href) {
+    iframe.src = 'assets/Beyond_Data_Privacy_Policy.pdf#toolbar=0&navpanes=0&scrollbar=0';
+  }
+  document.getElementById('ppOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePP() {
+  document.getElementById('ppOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on backdrop click
+document.getElementById('ppOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closePP();
+});
+
+// Close on Escape (extend existing keydown listener or add new one)
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePP();
+});
 
 customElements.define('site-footer', SiteFooter);
 
