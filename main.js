@@ -554,7 +554,7 @@ class SiteFooter extends HTMLElement {
               <h4 style="color: #00c2ff;">Global offices</h4>
               <div class="office"><strong>Middle East</strong>Dubai, UAE</div>
               <div class="office"><strong>Africa</strong>Cairo, Egypt</div>
-              <div class="office"><strong>APAC</strong>Sydney, Australia</div>
+              <div class="office"><strong>Australasia</strong>Sydney, Australia</div>
             </div>
           </div>
           <div class="footer-bottom">
