@@ -453,7 +453,7 @@ function cfReset() {
    HERO SLIDER
    ============================================================ */
 function initHeroSlider() {
-  const INTERVAL = 9000;
+  const INTERVAL = 7000;
 
   const section = document.getElementById("heroSliderSection");
   if (!section) return;
