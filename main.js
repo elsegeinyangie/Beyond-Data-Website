@@ -8,6 +8,15 @@ document.addEventListener('copy', e => e.preventDefault());
 document.addEventListener('cut', e => e.preventDefault());
 document.addEventListener('selectstart', e => e.preventDefault());
 
+/* ── FORMSPREE ID's ──────────────────────────────────── */
+// const FORMSPREE_ID = "xpqnqppj"; // test
+const FORMSPREE_ID = "mredepyo"; // production
+
+/* ── BASIN backup ──────────────────────────────────── */
+const ACTIVE_FORM_ENDPOINT = `https://formspree.io/f/${FORMSPREE_ID}`;       // Formspree (active)
+// const ACTIVE_FORM_ENDPOINT = "https://usebasin.com/f/616922ba149e";       // BASIN (backup)
+
+
 
 /* ── Toast notification ──────────────────────────────────── */
 let notifTimer = null;
@@ -181,8 +190,15 @@ async function completeHubDownload(userName, userEmail, userCompany) {
     formData.append("File",      pending.fileTitle);
     formData.append("_subject", "New Download — " + pending.fileTitle);
     formData.append("_template", "table");
-    fetch("https://formsubmit.co/ajax/letstalk@beyond-data.net", {
-      method: "POST", body: formData
+
+    if (ACTIVE_FORM_ENDPOINT.includes("splitforms")) {
+  formData.set("access_key", "your-splitforms-key");
+}
+
+    fetch(ACTIVE_FORM_ENDPOINT, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: formData
     }).catch(() => {});
 
   } catch (err) {
@@ -404,8 +420,13 @@ function cfSubmit() {
   formData.append("subject", subject);
   formData.append("message", msg);
 
-  fetch("https://formsubmit.co/ajax/letstalk@beyond-data.net", {
+  if (ACTIVE_FORM_ENDPOINT.includes("splitforms")) {
+  formData.set("access_key", "your-splitforms-key");
+}
+
+  fetch(ACTIVE_FORM_ENDPOINT, {
     method: "POST",
+    headers: { Accept: "application/json" },
     body: formData,
   })
     .then(function (res) {
