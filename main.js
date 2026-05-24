@@ -303,10 +303,15 @@ function submitGate() {
   }
 
   const domain = em.split('@')[1].toLowerCase();
+  const emailErr = document.getElementById('gEmailErr');
   if (PERSONAL_DOMAINS.has(domain)) {
-    showNotif("Work email required", "Please use your work email address to download this resource.");
+    if (emailErr) emailErr.style.display = 'block';
+    document.getElementById('gEmail').style.borderColor = '#ff4d6a';
+    localStorage.removeItem('gd_email');
     return;
   }
+  if (emailErr) emailErr.style.display = 'none';
+  document.getElementById('gEmail').style.borderColor = '';
 
   localStorage.setItem('gd_name',    n);
   localStorage.setItem('gd_email',   em);
@@ -325,8 +330,16 @@ function prefillGate() {
   const email   = localStorage.getItem('gd_email');
   const company = localStorage.getItem('gd_company');
   if (name)    document.getElementById('gName').value    = name;
-  if (email)   document.getElementById('gEmail').value   = email;
   if (company) document.getElementById('gCompany').value = company;
+  if (email) {
+    const domain = email.split('@')[1]?.toLowerCase();
+    if (PERSONAL_DOMAINS.has(domain)) {
+      // Stored email is personal — don't prefill it, wipe it from cache
+      localStorage.removeItem('gd_email');
+    } else {
+      document.getElementById('gEmail').value = email;
+    }
+  }
 }
 
 
@@ -339,7 +352,7 @@ function cfLive(fId, iId, type) {
   let ok = type === "name"
     ? val.length >= 2
     : type === "email"
-      ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)
+      ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) && !PERSONAL_DOMAINS.has(val.split('@')[1]?.toLowerCase())
       : val !== "";
   field.classList.toggle("ok",  ok);
   field.classList.toggle("err", !ok);
@@ -373,8 +386,12 @@ function cfValidate() {
 
   const email = document.getElementById("cf-email").value.trim();
   const fe    = document.getElementById("ff-email");
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { fe.classList.add("err"); fe.classList.remove("ok"); ok = false; }
-  else                                              { fe.classList.remove("err"); fe.classList.add("ok"); }
+  const emailDomain = email.split('@')[1]?.toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || PERSONAL_DOMAINS.has(emailDomain)) {
+    fe.classList.add("err"); fe.classList.remove("ok"); ok = false;
+  } else {
+    fe.classList.remove("err"); fe.classList.add("ok");
+  }
 
   const subj = document.getElementById("cf-subject").value;
   const fs   = document.getElementById("ff-subject");
