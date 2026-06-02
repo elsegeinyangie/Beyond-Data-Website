@@ -171,17 +171,17 @@
         }
       }
 
-      // 4. Send email notification via FormSubmit
-      const formData = new FormData();
-      formData.append("Name", userName);
-      formData.append("Email", userEmail);
-      formData.append("Company", userCompany || "Not provided");
-      formData.append("File", pending.fileTitle);
-      formData.append("_subject", "New Download — " + pending.fileTitle);
-      formData.append("_template", "table");
-      fetch("https://formsubmit.co/ajax/letstalk@beyond-data.net", {
+      // 4. Send email notification via backend
+      fetch("http://localhost:3001/api/send-download", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: userName,
+          email: userEmail,
+          company: userCompany || "Not provided",
+          fileTitle: pending.fileTitle,
+          downloadedAt: new Date().toISOString(),
+        }),
       }).catch(() => {});
     } catch (err) {
       console.error("Download error:", err);

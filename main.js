@@ -8,13 +8,8 @@ document.addEventListener('copy', e => e.preventDefault());
 document.addEventListener('cut', e => e.preventDefault());
 document.addEventListener('selectstart', e => e.preventDefault());
 
-/* ── FORMSPREE ID's ──────────────────────────────────── */
-// const FORMSPREE_ID = "xojylqgp"; // test
-const FORMSPREE_ID = "mredepyo"; // production
-
-/* ── BASIN backup ──────────────────────────────────── */
-const ACTIVE_FORM_ENDPOINT = `https://formspree.io/f/${FORMSPREE_ID}`;       // Formspree (active)
-// const ACTIVE_FORM_ENDPOINT = "https://usebasin.com/f/616922ba149e";       // BASIN (backup)
+/* ── Email backend ──────────────────────────────────── */
+const API_BASE_URL = "";
 
 
 
@@ -182,23 +177,17 @@ async function completeHubDownload(userName, userEmail, userCompany) {
       }
     }
 
-    // 4. Send email notification via FormSubmit
-    const formData = new FormData();
-    formData.append("Name",      userName);
-    formData.append("Email",     userEmail);
-    formData.append("Company",   userCompany || "Not provided");
-    formData.append("File",      pending.fileTitle);
-    formData.append("_subject", "New Download — " + pending.fileTitle);
-    formData.append("_template", "table");
-
-    if (ACTIVE_FORM_ENDPOINT.includes("splitforms")) {
-  formData.set("access_key", "your-splitforms-key");
-}
-
-    fetch(ACTIVE_FORM_ENDPOINT, {
+    // 4. Send email notification via backend
+    fetch(`${API_BASE_URL}/api/send-download`, {
       method: "POST",
-      headers: { Accept: "application/json" },
-      body: formData
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: userName,
+        email: userEmail,
+        company: userCompany || "Not provided",
+        fileTitle: pending.fileTitle,
+        downloadedAt: new Date().toISOString(),
+      }),
     }).catch(() => {});
 
   } catch (err) {
@@ -429,22 +418,10 @@ function cfSubmit() {
   const subject = document.getElementById("cf-subject").value;
   const msg     = document.getElementById("cf-msg").value.trim();
 
-  const formData = new FormData();
-  formData.append("name",    name);
-  formData.append("email",   email);
-  formData.append("company", company || "Not provided");
-  formData.append("phone",   phone   || "Not provided");
-  formData.append("subject", subject);
-  formData.append("message", msg);
-
-  if (ACTIVE_FORM_ENDPOINT.includes("splitforms")) {
-  formData.set("access_key", "your-splitforms-key");
-}
-
-  fetch(ACTIVE_FORM_ENDPOINT, {
+  fetch(`${API_BASE_URL}/api/send-contact`, {
     method: "POST",
-    headers: { Accept: "application/json" },
-    body: formData,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, company: company || "Not provided", phone: phone || "Not provided", subject, message: msg }),
   })
     .then(function (res) {
       if (res.ok) {
