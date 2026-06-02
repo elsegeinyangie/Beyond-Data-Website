@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+// app.use(express.static('../'));
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.office365.com',
@@ -67,8 +68,6 @@ app.post('/api/send-contact', async (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  res.json({ success: true });
-
   try {
     const html = buildContactTable({ name, email, company, phone, subject, message });
     await transporter.sendMail({
@@ -78,8 +77,10 @@ app.post('/api/send-contact', async (req, res) => {
       html: `<h2 style="font-family:Arial,sans-serif;color:#1a1a2e">New Contact Form Submission</h2>${html}`,
       replyTo: email,
     });
+    return res.json({ success: true });
   } catch (err) {
     console.error('Send contact error:', err);
+    return res.status(500).json({ error: 'Failed to send email' });
   }
 });
 
@@ -89,8 +90,6 @@ app.post('/api/send-download', async (req, res) => {
   if (!name || !email || !fileTitle) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
-
-  res.json({ success: true });
 
   try {
     const raw = downloadedAt || new Date().toISOString();
@@ -106,8 +105,10 @@ app.post('/api/send-download', async (req, res) => {
       html: `<h2 style="font-family:Arial,sans-serif;color:#1a1a2e">New Document Download</h2>${html}`,
       replyTo: email,
     });
+    return res.json({ success: true });
   } catch (err) {
     console.error('Send download error:', err);
+    return res.status(500).json({ error: 'Failed to send email' });
   }
 });
 
@@ -115,6 +116,10 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Email server running on http://localhost:${PORT}`);
-});
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`Email server running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
