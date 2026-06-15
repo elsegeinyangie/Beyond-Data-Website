@@ -138,7 +138,6 @@ function openHubGate(fileId, fileTitle, fileType) {
 async function completeHubDownload(userName, userEmail, userCompany) {
   const pending = window._hubPendingDownload;
   
-  // Wait up to 3 seconds if Firebase initialization is still wrapping up on slow mobile networks
   if (!window._fbReady) {
     let checkCount = 0;
     while (!window._fbReady && checkCount < 30) {
@@ -156,7 +155,7 @@ async function completeHubDownload(userName, userEmail, userCompany) {
   const { collection, getDocs, doc, updateDoc, increment, addDoc } = window._fsHelpers;
 
   try {
-    // 1. Log download execution parameters to Firestore tracking analytics
+    // 1. Log download execution parameters to Firestore
     await addDoc(collection(db, 'downloads'), {
       name:         userName,
       email:        userEmail,
@@ -166,13 +165,12 @@ async function completeHubDownload(userName, userEmail, userCompany) {
       downloadedAt: new Date(),
     });
 
-    // 2. Increment download analytics counter globally on the document object
+    // 2. Increment download analytics counter
     await updateDoc(doc(db, 'files', pending.fileId), {
       downloadCount: increment(1)
     });
 
-    // 3. CRITICAL SAFARI FIX: Send the email notification FIRST and AWAIT it!
-    // This forces Safari to finish communicating with your server before the file trigger cuts the thread.
+    // 3. Send email notification FIRST and await its execution
     try {
       await fetch(`/send-mail.php`, {
         method: "POST",
@@ -185,10 +183,10 @@ async function completeHubDownload(userName, userEmail, userCompany) {
         }),
       });
     } catch (mailErr) {
-      console.error("Mail dispatch tracking interrupted by sandbox:", mailErr);
+      console.error("Mail dispatch tracking interrupted:", mailErr);
     }
 
-    // 4. Fetch the file source parameters to prepare the client delivery sequence
+    // 4. Fetch the file source parameters and trigger download prompt
     const snap    = await getDocs(collection(db, 'files'));
     const fileDoc = snap.docs.find(d => d.id === pending.fileId);
     
@@ -197,7 +195,6 @@ async function completeHubDownload(userName, userEmail, userCompany) {
       if (f.externalUrl) {
         window.open(f.externalUrl, '_blank');
       } else if (f.base64) {
-        // Universal Native Download Prompt Trigger Sequence
         const base64Data = f.base64.includes(',') ? f.base64.split(',')[1] : f.base64;
         const byteCharacters = atob(base64Data);
         const byteNumbers = new Array(byteCharacters.length);
@@ -206,29 +203,24 @@ async function completeHubDownload(userName, userEmail, userCompany) {
         }
         const byteArray = new Uint8Array(byteNumbers);
         
-        // Setting the application/octet-stream content type forces Safari/Chrome to treat it as a raw downloadable file payload, not a viewable webpage
+        // Use application/octet-stream to universally force the browser download prompt box
         const blob = new Blob([byteArray], { type: 'application/octet-stream' });
         const blobUrl = URL.createObjectURL(blob);
         
-        // Create an in-memory virtual link element
         const downloadLink = document.createElement('a');
         downloadLink.href = blobUrl;
         
-        // Sanitize the file target name string to ensure a solid extension anchor
         let cleanTitle = f.fileName || f.title;
         if (!cleanTitle.toLowerCase().endsWith('.pdf')) {
           cleanTitle += '.pdf';
         }
         downloadLink.download = cleanTitle;
         
-        // CRITICAL SAFARI PROMPT REQUIREMENT: The link must momentarily reside within the active DOM map to fire native dialog states
         downloadLink.style.display = 'none';
         document.body.appendChild(downloadLink);
         
-        // Programmatically tap the hidden anchor link element
         downloadLink.click();
         
-        // Clean up allocation pointers from browser cache frames safely
         setTimeout(() => {
           document.body.removeChild(downloadLink);
           URL.revokeObjectURL(blobUrl);
@@ -237,7 +229,7 @@ async function completeHubDownload(userName, userEmail, userCompany) {
     }
 
   } catch (err) {
-    console.error('Download gate workflow processing breakdown:', err);
+    console.error('Download gate workflow processing error:', err);
   }
 
   window._hubPendingDownload = null;
