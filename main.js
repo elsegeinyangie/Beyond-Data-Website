@@ -173,24 +173,20 @@ async function completeHubDownload(userName, userEmail, userCompany) {
       }
     }
 
-    // 4. Send email notification via Firebase extension instead of Bluehost API
-    await addDoc(collection(db, 'mail'), {
-      to: 'letstalk@beyond-data.net',
-      message: {
-        subject: `Beyond Data — Knowledge Hub Download Notification`,
-        html: `
-          <h3>Knowledge Hub Activity</h3>
-          <p><strong>Resource:</strong> ${pending.fileTitle}</p>
-          <p><strong>User Name:</strong> ${userName}</p>
-          <p><strong>Work Email:</strong> ${userEmail}</p>
-          <p><strong>Company:</strong> ${userCompany || 'Not provided'}</p>
-          <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
-        `
-      }
-    });
+    // 4. Send email notification via native server-side PHP script
+    fetch(`/send-mail.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: userName,
+        email: userEmail,
+        company: userCompany || "Not provided",
+        fileTitle: pending.fileTitle
+      }),
+    }).catch((err) => console.error("Native mail delivery failed:", err));
 
   } catch (err) {
-    console.error('Download workflow tracking error:', err);
+    console.error('Download error:', err);
   }
 
   window._hubPendingDownload = null;
@@ -398,13 +394,8 @@ function cfValidate() {
   return ok;
 }
 
-async function cfSubmit() {
+function cfSubmit() {
   if (!cfValidate()) return;
-  if (!window._fbReady) {
-    showNotif("System initializing", "Please wait a moment and try submitting again.");
-    return;
-  }
-
   const btn = document.getElementById("cf-submitBtn");
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> Sending...';
@@ -416,45 +407,34 @@ async function cfSubmit() {
   const subject = document.getElementById("cf-subject").value;
   const msg     = document.getElementById("cf-msg").value.trim();
 
-  const db = window._db;
-  const { collection, addDoc } = window._fsHelpers;
-
-  try {
-    // Write contact entry straight into Firebase 'mail' collection to trigger extension email
-    await addDoc(collection(db, 'mail'), {
-      to: 'letstalk@beyond-data.net',
-      message: {
-        subject: `Beyond Data Inquiry: ${subject}`,
-        html: `
-          <h3>New Website Inquiry Received</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Work Email:</strong> ${email}</p>
-          <p><strong>Company:</strong> ${company || "Not provided"}</p>
-          <p><strong>Phone Reference:</strong> ${phone || "Not provided"}</p>
-          <p><strong>Topic Selection:</strong> ${subject}</p>
-          <p><strong>Message Content:</strong></p>
-          <blockquote style="background:#f4f4f4;padding:12px;border-left:4px solid #00c2ff;">${msg}</blockquote>
-          <p style="font-size:11px;color:#777">Generated dynamically via cloud automation triggers.</p>
-        `
+  // Target the native PHP script directly inside public_html
+  fetch(`/send-mail.php`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, company: company || "Not provided", phone: phone || "Not provided", subject, message: msg }),
+  })
+    .then(function (res) {
+      if (res.ok) {
+        document.getElementById("cf-successDetail").innerHTML =
+          "<strong>Submission summary</strong>Name: " + name +
+          "<br>Email: " + email +
+          (company ? "<br>Company: " + company : "") +
+          (phone   ? "<br>Phone: "   + phone   : "") +
+          "<br>Topic: " + subject;
+        document.getElementById("cf-formArea").style.display     = "none";
+        document.getElementById("cf-successState").style.display = "block";
+        showNotif("Message sent!", "We'll be in touch with you soon.");
+      } else {
+        btn.disabled  = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
+        showNotif("Something went wrong", "Please try again or contact us directly.");
       }
+    })
+    .catch(function () {
+      btn.disabled  = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
+      showNotif("Network error", "Please check your connection and try again.");
     });
-
-    document.getElementById("cf-successDetail").innerHTML =
-      "<strong>Submission summary</strong>Name: " + name +
-      "<br>Email: " + email +
-      (company ? "<br>Company: " + company : "") +
-      (phone   ? "<br>Phone: "   + phone   : "") +
-      "<br>Topic: " + subject;
-    document.getElementById("cf-formArea").style.display     = "none";
-    document.getElementById("cf-successState").style.display = "block";
-    showNotif("Message sent!", "We'll be in touch with you soon.");
-
-  } catch (err) {
-    console.error("Cloud mail queuing error:", err);
-    btn.disabled  = false;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
-    showNotif("Submission error", "We ran into an issue logging your submission. Please try again.");
-  }
 }
 
 function cfReset() {
