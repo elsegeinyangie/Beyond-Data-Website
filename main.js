@@ -301,7 +301,7 @@ function submitGate() {
 
   closeGate();
   completeHubDownload(n, em, co);
-  showNotif("Download Ready!", "Thank you " + n + "! We'll email a copy to " + em + ".");
+  showNotif("Download Ready!", "Thank you " + n + "! Your download is ready.");
 }
 
 function prefillGate() {
