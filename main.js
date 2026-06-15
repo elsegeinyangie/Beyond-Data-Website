@@ -137,13 +137,26 @@ function openHubGate(fileId, fileTitle, fileType) {
 
 async function completeHubDownload(userName, userEmail, userCompany) {
   const pending = window._hubPendingDownload;
-  if (!pending || !window._fbReady) return;
+  
+  // Wait up to 3 seconds if Firebase initialization is still wrapping up on slow mobile networks
+  if (!window._fbReady) {
+    let checkCount = 0;
+    while (!window._fbReady && checkCount < 30) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      checkCount++;
+    }
+  }
+
+  if (!pending || !window._fbReady) {
+    showNotif("System initializing", "Please wait a second and click download again.");
+    return;
+  }
 
   const db = window._db;
   const { collection, getDocs, doc, updateDoc, increment, addDoc } = window._fsHelpers;
 
   try {
-    // 1. Log download to Firestore
+    // 1. Log download execution parameters to Firestore tracking analytics
     await addDoc(collection(db, 'downloads'), {
       name:         userName,
       email:        userEmail,
@@ -153,40 +166,78 @@ async function completeHubDownload(userName, userEmail, userCompany) {
       downloadedAt: new Date(),
     });
 
-    // 2. Increment download counter on the file
+    // 2. Increment download analytics counter globally on the document object
     await updateDoc(doc(db, 'files', pending.fileId), {
       downloadCount: increment(1)
     });
 
-    // 3. Fetch file and trigger download
+    // 3. CRITICAL SAFARI FIX: Send the email notification FIRST and AWAIT it!
+    // This forces Safari to finish communicating with your server before the file trigger cuts the thread.
+    try {
+      await fetch(`/send-mail.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: userName,
+          email: userEmail,
+          company: userCompany || "Not provided",
+          fileTitle: pending.fileTitle
+        }),
+      });
+    } catch (mailErr) {
+      console.error("Mail dispatch tracking interrupted by sandbox:", mailErr);
+    }
+
+    // 4. Fetch the file source parameters to prepare the client delivery sequence
     const snap    = await getDocs(collection(db, 'files'));
     const fileDoc = snap.docs.find(d => d.id === pending.fileId);
+    
     if (fileDoc) {
       const f = fileDoc.data();
       if (f.externalUrl) {
         window.open(f.externalUrl, '_blank');
       } else if (f.base64) {
-        const a    = document.createElement('a');
-        a.href     = f.base64;
-        a.download = f.fileName || f.title;
-        a.click();
+        // Universal Native Download Prompt Trigger Sequence
+        const base64Data = f.base64.includes(',') ? f.base64.split(',')[1] : f.base64;
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        
+        // Setting the application/octet-stream content type forces Safari/Chrome to treat it as a raw downloadable file payload, not a viewable webpage
+        const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+        const blobUrl = URL.createObjectURL(blob);
+        
+        // Create an in-memory virtual link element
+        const downloadLink = document.createElement('a');
+        downloadLink.href = blobUrl;
+        
+        // Sanitize the file target name string to ensure a solid extension anchor
+        let cleanTitle = f.fileName || f.title;
+        if (!cleanTitle.toLowerCase().endsWith('.pdf')) {
+          cleanTitle += '.pdf';
+        }
+        downloadLink.download = cleanTitle;
+        
+        // CRITICAL SAFARI PROMPT REQUIREMENT: The link must momentarily reside within the active DOM map to fire native dialog states
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        
+        // Programmatically tap the hidden anchor link element
+        downloadLink.click();
+        
+        // Clean up allocation pointers from browser cache frames safely
+        setTimeout(() => {
+          document.body.removeChild(downloadLink);
+          URL.revokeObjectURL(blobUrl);
+        }, 200);
       }
     }
 
-    // 4. Send email notification via native server-side PHP script
-    fetch(`/send-mail.php`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: userName,
-        email: userEmail,
-        company: userCompany || "Not provided",
-        fileTitle: pending.fileTitle
-      }),
-    }).catch((err) => console.error("Native mail delivery failed:", err));
-
   } catch (err) {
-    console.error('Download error:', err);
+    console.error('Download gate workflow processing breakdown:', err);
   }
 
   window._hubPendingDownload = null;
