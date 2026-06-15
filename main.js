@@ -8,9 +8,6 @@ document.addEventListener('copy', e => e.preventDefault());
 document.addEventListener('cut', e => e.preventDefault());
 document.addEventListener('selectstart', e => e.preventDefault());
 
-/* ── Email backend ──────────────────────────────────── */
-const API_BASE_URL = "https://beyond-data.net";
-
 
 /* ── Toast notification ──────────────────────────────────── */
 let notifTimer = null;
@@ -90,7 +87,7 @@ async function loadHubContent() {
   const loadingEl = document.getElementById('hub-loading');
   const gridEl    = document.getElementById('hubGrid');
   const emptyEl   = document.getElementById('hub-empty');
-  if (!loadingEl) return; // hub page not in DOM yet
+  if (!loadingEl) return; 
 
   try {
     const snap = await getDocs(query(collection(db, 'files'), orderBy('createdAt', 'desc')));
@@ -176,21 +173,24 @@ async function completeHubDownload(userName, userEmail, userCompany) {
       }
     }
 
-    // 4. Send email notification via backend
-    fetch(`${API_BASE_URL}/api/send-download`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: userName,
-        email: userEmail,
-        company: userCompany || "Not provided",
-        fileTitle: pending.fileTitle,
-        downloadedAt: new Date().toISOString(),
-      }),
-    }).catch(() => {});
+    // 4. Send email notification via Firebase extension instead of Bluehost API
+    await addDoc(collection(db, 'mail'), {
+      to: 'letstalk@beyond-data.net',
+      message: {
+        subject: `Beyond Data — Knowledge Hub Download Notification`,
+        html: `
+          <h3>Knowledge Hub Activity</h3>
+          <p><strong>Resource:</strong> ${pending.fileTitle}</p>
+          <p><strong>User Name:</strong> ${userName}</p>
+          <p><strong>Work Email:</strong> ${userEmail}</p>
+          <p><strong>Company:</strong> ${userCompany || 'Not provided'}</p>
+          <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
+        `
+      }
+    });
 
   } catch (err) {
-    console.error('Download error:', err);
+    console.error('Download workflow tracking error:', err);
   }
 
   window._hubPendingDownload = null;
@@ -211,7 +211,6 @@ async function show(page) {
       view.innerHTML = html;
       loadedPages.add(page);
       if (page === 'hub') {
-        // If Firebase is ready load immediately, else flag for when it's ready
         if (window._fbReady) {
           loadHubContent();
         } else {
@@ -222,7 +221,6 @@ async function show(page) {
       view.innerHTML = '<p style="color:red;padding:2rem">Failed to load page.</p>';
     }
   } else if (page === 'hub') {
-    // Page was already loaded but user navigated away and back — reload hub content
     if (window._fbReady) loadHubContent();
   }
 
@@ -306,10 +304,7 @@ function submitGate() {
   localStorage.setItem('gd_company', co);
 
   closeGate();
-
-  // Complete the hub download (logs to Firestore + triggers file + sends email)
   completeHubDownload(n, em, co);
-
   showNotif("Download Ready!", "Thank you " + n + "! We'll email a copy to " + em + ".");
 }
 
@@ -322,7 +317,6 @@ function prefillGate() {
   if (email) {
     const domain = email.split('@')[1]?.toLowerCase();
     if (PERSONAL_DOMAINS.has(domain)) {
-      // Stored email is personal — don't prefill it, wipe it from cache
       localStorage.removeItem('gd_email');
     } else {
       document.getElementById('gEmail').value = email;
@@ -404,8 +398,13 @@ function cfValidate() {
   return ok;
 }
 
-function cfSubmit() {
+async function cfSubmit() {
   if (!cfValidate()) return;
+  if (!window._fbReady) {
+    showNotif("System initializing", "Please wait a moment and try submitting again.");
+    return;
+  }
+
   const btn = document.getElementById("cf-submitBtn");
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> Sending...';
@@ -417,33 +416,45 @@ function cfSubmit() {
   const subject = document.getElementById("cf-subject").value;
   const msg     = document.getElementById("cf-msg").value.trim();
 
-  fetch(`${API_BASE_URL}/api/send-contact`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, company: company || "Not provided", phone: phone || "Not provided", subject, message: msg }),
-  })
-    .then(function (res) {
-      if (res.ok) {
-        document.getElementById("cf-successDetail").innerHTML =
-          "<strong>Submission summary</strong>Name: " + name +
-          "<br>Email: " + email +
-          (company ? "<br>Company: " + company : "") +
-          (phone   ? "<br>Phone: "   + phone   : "") +
-          "<br>Topic: " + subject;
-        document.getElementById("cf-formArea").style.display     = "none";
-        document.getElementById("cf-successState").style.display = "block";
-        showNotif("Message sent!", "We'll be in touch with you soon.");
-      } else {
-        btn.disabled  = false;
-        btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
-        showNotif("Something went wrong", "Please try again or contact us directly.");
+  const db = window._db;
+  const { collection, addDoc } = window._fsHelpers;
+
+  try {
+    // Write contact entry straight into Firebase 'mail' collection to trigger extension email
+    await addDoc(collection(db, 'mail'), {
+      to: 'letstalk@beyond-data.net',
+      message: {
+        subject: `Beyond Data Inquiry: ${subject}`,
+        html: `
+          <h3>New Website Inquiry Received</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Work Email:</strong> ${email}</p>
+          <p><strong>Company:</strong> ${company || "Not provided"}</p>
+          <p><strong>Phone Reference:</strong> ${phone || "Not provided"}</p>
+          <p><strong>Topic Selection:</strong> ${subject}</p>
+          <p><strong>Message Content:</strong></p>
+          <blockquote style="background:#f4f4f4;padding:12px;border-left:4px solid #00c2ff;">${msg}</blockquote>
+          <p style="font-size:11px;color:#777">Generated dynamically via cloud automation triggers.</p>
+        `
       }
-    })
-    .catch(function () {
-      btn.disabled  = false;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
-      showNotif("Network error", "Please check your connection and try again.");
     });
+
+    document.getElementById("cf-successDetail").innerHTML =
+      "<strong>Submission summary</strong>Name: " + name +
+      "<br>Email: " + email +
+      (company ? "<br>Company: " + company : "") +
+      (phone   ? "<br>Phone: "   + phone   : "") +
+      "<br>Topic: " + subject;
+    document.getElementById("cf-formArea").style.display     = "none";
+    document.getElementById("cf-successState").style.display = "block";
+    showNotif("Message sent!", "We'll be in touch with you soon.");
+
+  } catch (err) {
+    console.error("Cloud mail queuing error:", err);
+    btn.disabled  = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
+    showNotif("Submission error", "We ran into an issue logging your submission. Please try again.");
+  }
 }
 
 function cfReset() {
@@ -583,7 +594,6 @@ class SiteFooter extends HTMLElement {
 /* ── Privacy Policy Modal ────────────────────────────────── */
 function openPP() {
   const iframe = document.getElementById('ppIframe');
-  // Load the PDF only on first open to avoid unnecessary requests
   if (!iframe.src || iframe.src === window.location.href) {
     iframe.src = 'assets/Beyond_Data_Privacy_Policy.pdf#toolbar=0&navpanes=0&scrollbar=0';
   }
@@ -596,12 +606,10 @@ function closePP() {
   document.body.style.overflow = '';
 }
 
-// Close on backdrop click
 document.getElementById('ppOverlay').addEventListener('click', function(e) {
   if (e.target === this) closePP();
 });
 
-// Close on Escape (extend existing keydown listener or add new one)
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closePP();
 });
