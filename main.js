@@ -9,13 +9,7 @@ document.addEventListener('cut', e => e.preventDefault());
 document.addEventListener('selectstart', e => e.preventDefault());
 
 /* ── Email backend ──────────────────────────────────── */
-<<<<<<< Updated upstream
-// const API_BASE_URL = "";
-const API_BASE_URL = "https://localhost:3001";
-=======
-const API_BASE_URL = "http://localhost:3001";
-//change to https://beyond-data-email.vercel.app when deploying the backend to Verce
->>>>>>> Stashed changes
+const API_BASE_URL = "https://beyond-data.net";
 
 
 /* ── Toast notification ──────────────────────────────────── */

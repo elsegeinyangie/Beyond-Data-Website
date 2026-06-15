@@ -116,10 +116,9 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
-if (process.env.VERCEL !== '1') {
-  app.listen(PORT, () => {
-    console.log(`Email server running on http://localhost:${PORT}`);
-  });
-}
+
+app.listen(PORT, () => {
+  console.log(`Email server running dynamically on port ${PORT}`);
+});
 
 export default app;
