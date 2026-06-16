@@ -26,38 +26,47 @@
   </head>
   <body>
     <!-- NAV -->
-    <header class="site-header">
-      <div class="nav-inner">
-        <div onclick="show('home')" style="cursor: pointer">
-          <img
-            src="assets/icons/full-logo.png"
-            alt="Beyond Data"
-            style="height: 5rem; width: auto; display: block"
-          />
-        </div>
-        <nav class="nav-links" id="mainNav">
-          <a id="nav-home" class="active" onclick="show('home')">Home</a>
-          <a onclick="show('solutions')">Solutions</a>
-          <a onclick="show('services')">Services</a>
-          <a onclick="show('hub')">Knowledge Hub</a>
-          <div class="dropdown">
-            <button class="dropbtn">Company</button>
-            <div class="dropdown-content">
-              <div class="dropdown-content-inner">
-                <a onclick="show('about')">About</a>
-                <a onclick="goToPartners()">Partners</a>
-              </div>
-            </div>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <div onclick="show('home')" style="cursor: pointer">
+      <img
+        src="assets/icons/full-logo.png"
+        alt="Beyond Data"
+        style="height: 5.7rem; width: auto; display: block"
+      />
+    </div>
+    <nav class="nav-links" id="mainNav">
+      <a id="nav-home" class="active" onclick="show('home')">Home</a>
+      <a onclick="show('solutions')">Solutions</a>
+      <a onclick="show('services')">Services</a>
+      <a onclick="show('hub')">Knowledge Hub</a>
+      <div class="dropdown">
+        <button class="dropbtn">Company</button>
+        <div class="dropdown-content">
+          <div class="dropdown-content-inner">
+            <a onclick="show('about')">About</a>
+            <a onclick="goToPartners()">Partners</a>
           </div>
-        </nav>
-        <div style="display: flex; align-items: center; gap: 12px">
-          <button class="nav-cta" onclick="show('contact')">Let's Talk</button>
-          <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
-            <span></span><span></span><span></span>
-          </button>
         </div>
       </div>
-    </header>
+      
+      <!-- Mobile-only CTA button -->
+      <!-- Changed class to nav-cta-mobile to avoid conflict with desktop button -->
+      <div class="nav-cta-mobile-wrapper">
+        <button class="nav-cta-mobile" onclick="show('contact')">Let's Talk</button>
+      </div>
+    </nav>
+    
+    <div style="display: flex; align-items: center; gap: 12px">
+      <!-- Desktop CTA (Visible on Desktop, Hidden on Mobile) -->
+      <button class="nav-cta" onclick="show('contact')">Let's Talk</button>
+      <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
 
     <!-- GATE MODAL -->
     <div class="gate-overlay" id="gateOverlay">
@@ -509,5 +518,17 @@
     </div>
 
     <script src="main.js"></script>
+    <script>
+      function toggleNav() {
+  const nav = document.getElementById('mainNav');
+  const hamburger = document.querySelector('.hamburger');
+  
+  // Toggle the menu visibility
+  nav.classList.toggle('open');
+  
+  // Toggle the hamburger icon animation
+  hamburger.classList.toggle('open');
+}
+    </script>
   </body>
 </html>

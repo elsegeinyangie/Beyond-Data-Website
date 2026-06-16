@@ -68,7 +68,7 @@ a {
   align-items: center;
 }
 .nav-links a {
-  font-size: 13px;
+  font-size: 15px;
   color: rgba(255, 255, 255, 0.5);
   padding: 7px 13px;
   border-radius: 7px;
@@ -83,7 +83,7 @@ a {
 .nav-cta {
   background: #00c2ff;
   color: #000;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   padding: 8px 20px;
   border-radius: 8px;
@@ -97,32 +97,63 @@ a {
   color: #fff;
 }
 
+/* ============================================================
+   HAMBURGER & MOBILE NAV ANIMATION
+   ============================================================ */
 .hamburger {
-  display: none;
+  display: none; /* Hidden on desktop */
   flex-direction: column;
-  gap: 5px;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
   cursor: pointer;
   border: none;
   background: none;
-  padding: 4px;
-}
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: #fff;
-  border-radius: 2px;
+  padding: 0;
+  z-index: 101;
 }
 
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+  transform-origin: center; /* Crucial for clean rotation */
+}
+
+/* 
+   Animation Logic:
+   Top line: Rotates 45deg and moves down to center
+   Middle line: Fades out and shrinks
+   Bottom line: Rotates -45deg and moves up to center
+*/
+
+/* State: OPEN (X) */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+
 /* ============================================================
-DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
-============================================================ */
+   DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
+   ============================================================ */
 .dropdown {
   position: relative;
 }
 
 .dropbtn {
-  font-size: 13px;
+  font-size: 15px;
   color: rgba(255, 255, 255, 0.5);
   padding: 7px 13px;
   border-radius: 7px;
@@ -139,15 +170,15 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
 
 .dropbtn:hover {
   color: #fff;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.07); /* This now matches .nav-links a:hover */
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  top: 100%; /* Directly below button */
+  top: 100%;
   left: 0;
-  margin-top: 0; /* Remove padding-top — we'll use ::before for spacing */
+  margin-top: 0;
   z-index: 999;
   min-width: 140px;
 }
@@ -156,7 +187,7 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
 .dropdown-content::before {
   content: "";
   position: absolute;
-  top: -8px; /* Covers the gap between button and dropdown */
+  top: -8px;
   left: 0;
   right: 0;
   height: 8px;
@@ -170,13 +201,13 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  margin-top: 4px; /* Visual gap after the invisible bridge */
+  margin-top: 4px;
 }
 
 .dropdown-content a {
   display: block;
   padding: 7px 13px;
-  font-size: 13px;
+  font-size: 15px;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   white-space: nowrap;
@@ -1676,9 +1707,23 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
 }
 
 /* ============================================================
-   RESPONSIVE
+   GLOBAL RESET (Prevents Horizontal Scroll)
    ============================================================ */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ============================================================
+   RESPONSIVE UPDATES
+   ============================================================ */
+
+   .nav-cta-mobile-wrapper {
+  display: none;
+}
+
 @media (max-width: 900px) {
+  /* Grid Layout Adjustments */
   .sol-grid,
   .about-grid,
   .contact-grid,
@@ -1708,39 +1753,161 @@ DROPDOWN FIX - Company Menu (HOVERABLE LINKS)
   .val-grid {
     grid-template-columns: 1fr 1fr;
   }
-  .nav-links {
+
+  /* Hide Desktop CTA Button */
+  .nav-inner > div:last-child .nav-cta {
     display: none;
   }
+
+  /* Show Mobile Wrapper & Button */
+  .nav-cta-mobile-wrapper {
+    display: flex !important;
+    width: 100%;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+   /* Ensure Desktop Button is HIDDEN on mobile */
+  .nav-inner > div:last-child .nav-cta {
+    display: none;
+  }
+
+  .nav-cta-mobile {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    background: #00c2ff;
+    color: #000;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.18s;
+  }
+
+  .nav-cta-mobile:hover {
+    background: #2470cc;
+    color: #fff;
+  }
+
+  /* Hamburger visible on mobile */
   .hamburger {
     display: flex;
   }
+
+  /* ============================================================
+     MOBILE NAV PANEL (Full Screen Overlay)
+     ============================================================ */
+  .nav-links {
+    display: none;
+    position: fixed;        /* Changed from absolute to fixed */
+    top: 64px;              /* Starts below header */
+    left: 0;
+    right: 0;
+    bottom: 0;              /* Extends to bottom of screen */
+    height: calc(100vh - 64px); /* Exact remaining screen height */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: rgba(11, 22, 40, 0.99); /* Slightly more opaque */
+    backdrop-filter: blur(20px);
+    border-bottom: none;    /* No border needed as it fills screen */
+    padding: 20px 28px;     /* More breathing room */
+    z-index: 99;
+    overflow-y: auto;       /* Allow scroll if content is tall */
+    animation: navSlideDown 0.3s ease forwards;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  @keyframes navSlideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Reset link styles for mobile vertical list */
+  .nav-links a,
+  .nav-links .dropbtn {
+    display: block;
+    width: 100%;
+    padding: 16px 0;        /* Taller touch targets */
+    font-size: 18px;        /* Larger text for mobile */
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: left;
+    background: transparent !important;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active,
+  .nav-links .dropbtn:hover {
+    color: #fff;
+    background: none !important;
+  }
+
+  .nav-links a:last-of-type {
+    border-bottom: none;
+  }
+
+  /* Dropdown inside mobile menu */
+  .nav-links .dropdown {
+    width: 100%;
+  }
+
+  .nav-links .dropbtn {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-links .dropdown-content {
+    position: static;
+    display: none;
+    margin-top: 0;
+    padding-left: 16px;
+  }
+
+  .nav-links .dropdown-content::before {
+    display: none;
+  }
+
+  .nav-links .dropdown-content-inner {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    margin-top: 0;
+  }
+
+  .nav-links .dropdown-content a {
+    border-bottom: none;
+    padding: 12px 0;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  .nav-links .dropdown.open .dropdown-content {
+    display: block;
+  }
+
   .hero-slider-section {
     min-height: 460px;
   }
 }
+
 @media (max-width: 600px) {
-  .kh-grid {
-    grid-template-columns: 1fr;
-  }
-  .val-grid {
-    grid-template-columns: 1fr;
-  }
-  .hero h1 {
-    font-size: 1.8rem;
-  }
-  .c-info,
-  .c-form {
-    padding: 32px 24px;
-  }
-  .container {
-    padding: 0 18px;
-  }
-  .hero-slider-section {
-    min-height: 380px;
-  }
-  .hero-slider-arrows {
-    display: none;
-  }
+  .kh-grid { grid-template-columns: 1fr; }
+  .val-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 1.8rem; }
+  .c-info, .c-form { padding: 32px 24px; }
+  .container { padding: 0 18px; }
+  .hero-slider-section { min-height: 380px; }
+  .hero-slider-arrows { display: none; }
 }
 
 /* ============================================================

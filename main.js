@@ -1,13 +1,12 @@
 /* ============================================================
   Beyond Data — Main JavaScript
-   ============================================================ */
+  ============================================================ */
 
 // Disable copy, cut, right-click sitewide
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('copy', e => e.preventDefault());
 document.addEventListener('cut', e => e.preventDefault());
 document.addEventListener('selectstart', e => e.preventDefault());
-
 
 /* ── Toast notification ──────────────────────────────────── */
 let notifTimer = null;
