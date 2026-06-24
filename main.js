@@ -242,6 +242,14 @@ async function show(page) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const view = document.getElementById(`view-${page}`);
 
+   // Close mobile nav if open
+  const nav = document.getElementById("mainNav");
+  const hamburger = document.querySelector(".hamburger");
+  if (nav.classList.contains("open")) {
+    nav.classList.remove("open");
+    hamburger.classList.remove("open");
+  }
+
   if (!loadedPages.has(page)) {
     try {
       const res  = await fetch(`pages/${page}.html`);

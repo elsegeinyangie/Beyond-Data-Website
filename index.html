@@ -27,46 +27,48 @@
   <body>
     <!-- NAV -->
 
-<header class="site-header">
-  <div class="nav-inner">
-    <div onclick="show('home')" style="cursor: pointer">
-      <img
-        src="assets/icons/full-logo.png"
-        alt="Beyond Data"
-        style="height: 5.7rem; width: auto; display: block"
-      />
-    </div>
-    <nav class="nav-links" id="mainNav">
-      <a id="nav-home" class="active" onclick="show('home')">Home</a>
-      <a onclick="show('solutions')">Solutions</a>
-      <a onclick="show('services')">Services</a>
-      <a onclick="show('hub')">Knowledge Hub</a>
-      <div class="dropdown">
-        <button class="dropbtn">Company</button>
-        <div class="dropdown-content">
-          <div class="dropdown-content-inner">
-            <a onclick="show('about')">About</a>
-            <a onclick="goToPartners()">Partners</a>
+    <header class="site-header">
+      <div class="nav-inner">
+        <div onclick="show('home')" style="cursor: pointer">
+          <img
+            src="assets/icons/full-logo.png"
+            alt="Beyond Data"
+            style="height: 5.7rem; width: auto; display: block"
+          />
+        </div>
+        <nav class="nav-links" id="mainNav">
+          <a id="nav-home" class="active" onclick="show('home')">Home</a>
+          <a onclick="show('solutions')">Solutions</a>
+          <a onclick="show('services')">Services</a>
+          <a onclick="show('hub')">Knowledge Hub</a>
+          <div class="dropdown">
+            <button class="dropbtn">Company</button>
+            <div class="dropdown-content">
+              <div class="dropdown-content-inner">
+                <a onclick="show('about')">About</a>
+                <a onclick="goToPartners()">Partners</a>
+              </div>
+            </div>
           </div>
+
+          <!-- Mobile-only CTA button -->
+          <!-- Changed class to nav-cta-mobile to avoid conflict with desktop button -->
+          <div class="nav-cta-mobile-wrapper">
+            <button class="nav-cta-mobile" onclick="show('contact')">
+              Let's Talk
+            </button>
+          </div>
+        </nav>
+
+        <div style="display: flex; align-items: center; gap: 12px">
+          <!-- Desktop CTA (Visible on Desktop, Hidden on Mobile) -->
+          <button class="nav-cta" onclick="show('contact')">Let's Talk</button>
+          <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </div>
-      
-      <!-- Mobile-only CTA button -->
-      <!-- Changed class to nav-cta-mobile to avoid conflict with desktop button -->
-      <div class="nav-cta-mobile-wrapper">
-        <button class="nav-cta-mobile" onclick="show('contact')">Let's Talk</button>
-      </div>
-    </nav>
-    
-    <div style="display: flex; align-items: center; gap: 12px">
-      <!-- Desktop CTA (Visible on Desktop, Hidden on Mobile) -->
-      <button class="nav-cta" onclick="show('contact')">Let's Talk</button>
-      <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
+    </header>
 
     <!-- GATE MODAL -->
     <div class="gate-overlay" id="gateOverlay">
@@ -102,9 +104,7 @@
           </svg>
         </div>
         <h3>Access your free resource</h3>
-        <p class="gate-sub">
-          Enter your details to download.
-        </p>
+        <p class="gate-sub">Enter your details to download.</p>
         <div class="doc-pill" id="gateDocTitle">
           Global Cyber Threat Landscape 2025
         </div>
@@ -115,8 +115,25 @@
         <div class="g-row">
           <div class="g-field">
             <label>Work email *</label>
-            <input id="gEmail" type="email" placeholder="you@company.com" oninput="document.getElementById('gEmailErr').style.display='none';this.style.borderColor='';" />
-            <span id="gEmailErr" style="display:none;font-size:12px;color:#ff4d6a;margin-top:4px;">Please use your work email address.</span>
+            <input
+              id="gEmail"
+              type="email"
+              placeholder="you@company.com"
+              oninput="
+                document.getElementById('gEmailErr').style.display = 'none';
+                this.style.borderColor = '';
+              "
+            />
+            <span
+              id="gEmailErr"
+              style="
+                display: none;
+                font-size: 12px;
+                color: #ff4d6a;
+                margin-top: 4px;
+              "
+              >Please use your work email address.</span
+            >
           </div>
           <div class="g-field">
             <label>Company</label>
@@ -286,7 +303,6 @@
           <div class="text-center" style="margin-bottom: 44px">
             <div class="sec-tag">Our solutions</div>
             <h2 class="sec-title">Intelligence for Every Threat Vector</h2>
-           
           </div>
           <div class="sol-grid">
             <div class="sol-card">
@@ -408,13 +424,7 @@
             <div class="sec-tag">Why Beyond Data</div>
             <h2 class="sec-title">Advanced Capability. Proven Outcomes.</h2>
           </div>
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(3, 1fr);
-              gap: 20px;
-            "
-          >
+          <div class="why-grid">
             <div class="card">
               <div class="card-icon">
                 <img src="assets/icons/why-choose-us-icon-1.png" alt="" />
@@ -424,7 +434,6 @@
                   font-size: 15px;
                   font-weight: 500;
                   color: #fff;
-                  margin-bottom: 8px;
                 "
               >
                 A Decade of Global Excellence
@@ -520,15 +529,15 @@
     <script src="main.js"></script>
     <script>
       function toggleNav() {
-  const nav = document.getElementById('mainNav');
-  const hamburger = document.querySelector('.hamburger');
-  
-  // Toggle the menu visibility
-  nav.classList.toggle('open');
-  
-  // Toggle the hamburger icon animation
-  hamburger.classList.toggle('open');
-}
+        const nav = document.getElementById("mainNav");
+        const hamburger = document.querySelector(".hamburger");
+
+        // Toggle the menu visibility
+        nav.classList.toggle("open");
+
+        // Toggle the hamburger icon animation
+        hamburger.classList.toggle("open");
+      }
     </script>
   </body>
 </html>
