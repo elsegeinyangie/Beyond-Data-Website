@@ -1,14 +1,19 @@
 import express from 'express';
 import cors from 'cors';
 import nodemailer from 'nodemailer';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import 'dotenv/config';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, '..');
 
 app.use(cors());
 app.use(express.json());
-// app.use(express.static('../'));
+app.use(express.static(rootDir));
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.office365.com',
@@ -116,6 +121,10 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
+  res.sendFile(path.join(rootDir, 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Email server running dynamically on port ${PORT}`);

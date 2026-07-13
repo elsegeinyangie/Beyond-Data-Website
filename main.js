@@ -237,10 +237,36 @@ async function completeHubDownload(userName, userEmail, userCompany) {
 
 /* ── View router ─────────────────────────────────────────── */
 const loadedPages = new Set(['home']);
+const ROUTE_MAP = {
+  home: '/',
+  about: '/about',
+  solutions: '/solutions',
+  services: '/services',
+  'knowledge-hub': '/knowledge-hub',
+  contact: '/contact',
+};
 
-async function show(page) {
+function getPageFromPath(pathname = window.location.pathname) {
+  const cleaned = pathname.replace(/^\/+|\/+$/g, '');
+  if (!cleaned) return 'home';
+  if (cleaned === 'hub') return 'knowledge-hub';
+  if (cleaned === 'knowledge-hub') return 'knowledge-hub';
+  const match = Object.entries(ROUTE_MAP).find(([, route]) => route === `/${cleaned}`);
+  return match ? match[0] : 'home';
+}
+
+function updateUrl(page) {
+  const nextPath = ROUTE_MAP[page] || '/';
+  if (window.location.pathname !== nextPath) {
+    window.history.pushState({ page }, '', nextPath);
+  }
+}
+
+async function show(page, shouldUpdateUrl = true) {
+  const normalizedPage = page || 'home';
+
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  const view = document.getElementById(`view-${page}`);
+  const view = document.getElementById(`view-${normalizedPage}`);
 
    // Close mobile nav if open
   const nav = document.getElementById("mainNav");
@@ -250,13 +276,13 @@ async function show(page) {
     hamburger.classList.remove("open");
   }
 
-  if (!loadedPages.has(page)) {
+  if (!loadedPages.has(normalizedPage)) {
     try {
-      const res  = await fetch(`pages/${page}.html`);
+      const res  = await fetch(`/pages/${normalizedPage}.html`);
       const html = await res.text();
       view.innerHTML = html;
-      loadedPages.add(page);
-      if (page === 'hub') {
+      loadedPages.add(normalizedPage);
+      if (normalizedPage === 'hub') {
         if (window._fbReady) {
           loadHubContent();
         } else {
@@ -266,18 +292,28 @@ async function show(page) {
     } catch (e) {
       view.innerHTML = '<p style="color:red;padding:2rem">Failed to load page.</p>';
     }
-  } else if (page === 'hub') {
+  } else if (normalizedPage === 'hub') {
     if (window._fbReady) loadHubContent();
   }
 
   view.classList.add('active');
   window.scrollTo(0, 0);
 
+  if (shouldUpdateUrl) {
+    updateUrl(normalizedPage);
+  }
+
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const navMap = { home: 0, solutions: 1, services: 2, hub: 3 };
+  const navMap = { home: 0, solutions: 1, services: 2, 'knowledge-hub': 3 };
   const links  = document.querySelectorAll('.nav-links > a');
-  if (navMap[page] !== undefined) links[navMap[page]].classList.add('active');
+  if (navMap[normalizedPage] !== undefined) links[navMap[normalizedPage]].classList.add('active');
 }
+
+window.addEventListener('popstate', () => {
+  show(getPageFromPath(window.location.pathname), false);
+});
+
+show(getPageFromPath(window.location.pathname), false);
 
 
 /* ── Partners scroll ─────────────────────────────────────── */
@@ -601,7 +637,7 @@ class SiteFooter extends HTMLElement {
               <ul>
                 <li><a onclick="show('about')">About Us</a></li>
                 <li><a onclick="show('services')">Services</a></li>
-                <li><a onclick="show('hub')">Knowledge Hub</a></li>
+                <li><a onclick="show('knowledge-hub')">Knowledge Hub</a></li>
                 <li><a onclick="show('contact')">Contact</a></li>
               </ul>
             </div>
