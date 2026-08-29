@@ -14,7 +14,7 @@ let notifTimer = null;
 function showNotif(header, text) {
   const el = document.getElementById('notification');
   document.getElementById('notif-header').textContent = header;
-  document.getElementById('notif-text').textContent   = text;
+  document.getElementById('notif-text').textContent = text;
 
   el.classList.remove('show');
   void el.offsetWidth;
@@ -48,21 +48,21 @@ import('https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js').then(({ ini
     getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, increment, addDoc
   }) => {
     const firebaseConfig = {
-      apiKey:            "AIzaSyALFwIt7_koP1zaN7XP-kjvZHi1yaKOfB4",
-      authDomain:        "beyond-data-1013d.firebaseapp.com",
-      projectId:         "beyond-data-1013d",
-      storageBucket:     "beyond-data-1013d.firebasestorage.app",
+      apiKey: "AIzaSyALFwIt7_koP1zaN7XP-kjvZHi1yaKOfB4",
+      authDomain: "beyond-data-1013d.firebaseapp.com",
+      projectId: "beyond-data-1013d",
+      storageBucket: "beyond-data-1013d.firebasestorage.app",
       messagingSenderId: "921236694715",
-      appId:             "1:921236694715:web:c1d16affcaca65befa2b9e",
+      appId: "1:921236694715:web:c1d16affcaca65befa2b9e",
     };
 
     const fbApp = initializeApp(firebaseConfig);
-    const db    = getFirestore(fbApp);
+    const db = getFirestore(fbApp);
 
     // Expose db and Firestore helpers globally so hub functions can use them
-    window._db         = db;
-    window._fsHelpers  = { collection, getDocs, query, orderBy, doc, updateDoc, increment, addDoc };
-    window._fbReady    = true;
+    window._db = db;
+    window._fsHelpers = { collection, getDocs, query, orderBy, doc, updateDoc, increment, addDoc };
+    window._fbReady = true;
 
     // If hub was already loaded before Firebase was ready, load hub content now
     if (window._hubWaiting) loadHubContent();
@@ -72,7 +72,7 @@ import('https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js').then(({ ini
 /* ── Hub content loader ──────────────────────────────────── */
 function typeIcon(type) {
   const icons = {
-    pdf:  `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#ff4d6a;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>`,
+    pdf: `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#ff4d6a;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>`,
     docx: `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#00c2ff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>`,
     link: `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#00d97e;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>`,
   };
@@ -80,13 +80,13 @@ function typeIcon(type) {
 }
 
 async function loadHubContent() {
-  const db          = window._db;
+  const db = window._db;
   const { collection, getDocs, query, orderBy } = window._fsHelpers;
 
   const loadingEl = document.getElementById('hub-loading');
-  const gridEl    = document.getElementById('hubGrid');
-  const emptyEl   = document.getElementById('hub-empty');
-  if (!loadingEl) return; 
+  const gridEl = document.getElementById('hubGrid');
+  const emptyEl = document.getElementById('hub-empty');
+  if (!loadingEl) return;
 
   try {
     const snap = await getDocs(query(collection(db, 'files'), orderBy('createdAt', 'desc')));
@@ -136,7 +136,7 @@ function openHubGate(fileId, fileTitle, fileType) {
 
 async function completeHubDownload(userName, userEmail, userCompany) {
   const pending = window._hubPendingDownload;
-  
+
   if (!window._fbReady) {
     let checkCount = 0;
     while (!window._fbReady && checkCount < 30) {
@@ -156,11 +156,11 @@ async function completeHubDownload(userName, userEmail, userCompany) {
   try {
     // 1. Log download execution parameters to Firestore
     await addDoc(collection(db, 'downloads'), {
-      name:         userName,
-      email:        userEmail,
-      company:      userCompany || '',
-      fileId:       pending.fileId,
-      fileTitle:    pending.fileTitle,
+      name: userName,
+      email: userEmail,
+      company: userCompany || '',
+      fileId: pending.fileId,
+      fileTitle: pending.fileTitle,
       downloadedAt: new Date(),
     });
 
@@ -186,9 +186,9 @@ async function completeHubDownload(userName, userEmail, userCompany) {
     }
 
     // 4. Fetch the file source parameters and trigger download prompt
-    const snap    = await getDocs(collection(db, 'files'));
+    const snap = await getDocs(collection(db, 'files'));
     const fileDoc = snap.docs.find(d => d.id === pending.fileId);
-    
+
     if (fileDoc) {
       const f = fileDoc.data();
       if (f.externalUrl) {
@@ -201,25 +201,25 @@ async function completeHubDownload(userName, userEmail, userCompany) {
           byteNumbers[i] = byteCharacters.charCodeAt(i);
         }
         const byteArray = new Uint8Array(byteNumbers);
-        
+
         // Use application/octet-stream to universally force the browser download prompt box
         const blob = new Blob([byteArray], { type: 'application/octet-stream' });
         const blobUrl = URL.createObjectURL(blob);
-        
+
         const downloadLink = document.createElement('a');
         downloadLink.href = blobUrl;
-        
+
         let cleanTitle = f.fileName || f.title;
         if (!cleanTitle.toLowerCase().endsWith('.pdf')) {
           cleanTitle += '.pdf';
         }
         downloadLink.download = cleanTitle;
-        
+
         downloadLink.style.display = 'none';
         document.body.appendChild(downloadLink);
-        
+
         downloadLink.click();
-        
+
         setTimeout(() => {
           document.body.removeChild(downloadLink);
           URL.revokeObjectURL(blobUrl);
@@ -268,7 +268,7 @@ async function show(page, shouldUpdateUrl = true) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const view = document.getElementById(`view-${normalizedPage}`);
 
-   // Close mobile nav if open
+  // Close mobile nav if open
   const nav = document.getElementById("mainNav");
   const hamburger = document.querySelector(".hamburger");
   if (nav.classList.contains("open")) {
@@ -278,7 +278,7 @@ async function show(page, shouldUpdateUrl = true) {
 
   if (!loadedPages.has(normalizedPage)) {
     try {
-      const res  = await fetch(`/pages/${normalizedPage}.html`);
+      const res = await fetch(`/pages/${normalizedPage}.html`);
       const html = await res.text();
       view.innerHTML = html;
       loadedPages.add(normalizedPage);
@@ -305,7 +305,7 @@ async function show(page, shouldUpdateUrl = true) {
 
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   const navMap = { home: 0, solutions: 1, services: 2, 'knowledge-hub': 3 };
-  const links  = document.querySelectorAll('.nav-links > a');
+  const links = document.querySelectorAll('.nav-links > a');
   if (navMap[normalizedPage] !== undefined) links[navMap[normalizedPage]].classList.add('active');
 }
 
@@ -354,16 +354,16 @@ document.addEventListener("keydown", function (e) {
 });
 
 const PERSONAL_DOMAINS = new Set([
-  'gmail.com','yahoo.com','hotmail.com','outlook.com','live.com','icloud.com',
-  'me.com','mac.com','aol.com','protonmail.com','proton.me','mail.com',
-  'zoho.com','yandex.com','gmx.com','inbox.com','rediffmail.com','msn.com',
+  'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'live.com', 'icloud.com',
+  'me.com', 'mac.com', 'aol.com', 'protonmail.com', 'proton.me', 'mail.com',
+  'zoho.com', 'yandex.com', 'gmx.com', 'inbox.com', 'rediffmail.com', 'msn.com',
 ]);
 
 function submitGate() {
-  const n  = document.getElementById("gName").value.trim();
+  const n = document.getElementById("gName").value.trim();
   const em = document.getElementById("gEmail").value.trim();
   const co = document.getElementById("gCompany").value.trim();
-  const c  = document.getElementById("gConsent").checked;
+  const c = document.getElementById("gConsent").checked;
 
   if (!n || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em) || !c) {
     showNotif("Missing details", "Please fill in your name, a valid email, and agree to the Privacy Policy.");
@@ -381,8 +381,8 @@ function submitGate() {
   if (emailErr) emailErr.style.display = 'none';
   document.getElementById('gEmail').style.borderColor = '';
 
-  localStorage.setItem('gd_name',    n);
-  localStorage.setItem('gd_email',   em);
+  localStorage.setItem('gd_name', n);
+  localStorage.setItem('gd_email', em);
   localStorage.setItem('gd_company', co);
 
   closeGate();
@@ -391,10 +391,10 @@ function submitGate() {
 }
 
 function prefillGate() {
-  const name    = localStorage.getItem('gd_name');
-  const email   = localStorage.getItem('gd_email');
+  const name = localStorage.getItem('gd_name');
+  const email = localStorage.getItem('gd_email');
   const company = localStorage.getItem('gd_company');
-  if (name)    document.getElementById('gName').value    = name;
+  if (name) document.getElementById('gName').value = name;
   if (company) document.getElementById('gCompany').value = company;
   if (email) {
     const domain = email.split('@')[1]?.toLowerCase();
@@ -411,20 +411,20 @@ function prefillGate() {
 function cfLive(fId, iId, type) {
   const field = document.getElementById(fId);
   const input = document.getElementById(iId);
-  const val   = input.value.trim();
+  const val = input.value.trim();
   if (!val) { field.classList.remove("ok", "err"); return; }
   let ok = type === "name"
     ? val.length >= 2
     : type === "email"
       ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) && !PERSONAL_DOMAINS.has(val.split('@')[1]?.toLowerCase())
       : val !== "";
-  field.classList.toggle("ok",  ok);
+  field.classList.toggle("ok", ok);
   field.classList.toggle("err", !ok);
 }
 
 function cfMsgInput() {
-  const ta  = document.getElementById("cf-msg");
-  const cc  = document.getElementById("cf-char");
+  const ta = document.getElementById("cf-msg");
+  const cc = document.getElementById("cf-char");
   const len = ta.value.length;
   cc.textContent = len + " / 1000";
   cc.classList.toggle("warn", len > 900);
@@ -444,12 +444,12 @@ function cfValidate() {
   let ok = true;
 
   const name = document.getElementById("cf-name").value.trim();
-  const ff   = document.getElementById("ff-name");
+  const ff = document.getElementById("ff-name");
   if (name.length < 2) { ff.classList.add("err"); ff.classList.remove("ok"); ok = false; }
-  else                  { ff.classList.remove("err"); ff.classList.add("ok"); }
+  else { ff.classList.remove("err"); ff.classList.add("ok"); }
 
   const email = document.getElementById("cf-email").value.trim();
-  const fe    = document.getElementById("ff-email");
+  const fe = document.getElementById("ff-email");
   const emailDomain = email.split('@')[1]?.toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || PERSONAL_DOMAINS.has(emailDomain)) {
     fe.classList.add("err"); fe.classList.remove("ok"); ok = false;
@@ -458,13 +458,13 @@ function cfValidate() {
   }
 
   const subj = document.getElementById("cf-subject").value;
-  const fs   = document.getElementById("ff-subject");
+  const fs = document.getElementById("ff-subject");
   if (!subj) { fs.classList.add("err"); fs.classList.remove("ok"); ok = false; }
-  else        { fs.classList.remove("err"); fs.classList.add("ok"); }
+  else { fs.classList.remove("err"); fs.classList.add("ok"); }
 
   const msg = document.getElementById("cf-msg").value.trim();
-  const fm  = document.getElementById("ff-msg");
-  const me  = document.getElementById("cf-msg-err");
+  const fm = document.getElementById("ff-msg");
+  const me = document.getElementById("cf-msg-err");
   if (msg.length < 20) {
     fm.classList.add("err"); fm.classList.remove("ok");
     me.style.display = "block"; ok = false;
@@ -475,7 +475,7 @@ function cfValidate() {
 
   const consent = document.getElementById("cf-consent").checked;
   if (!consent) { document.getElementById("cf-consent-err").style.display = "block"; ok = false; }
-  else           { document.getElementById("cf-consent-err").style.display = "none"; }
+  else { document.getElementById("cf-consent-err").style.display = "none"; }
 
   return ok;
 }
@@ -486,12 +486,12 @@ function cfSubmit() {
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> Sending...';
 
-  const name    = document.getElementById("cf-name").value.trim();
-  const email   = document.getElementById("cf-email").value.trim();
+  const name = document.getElementById("cf-name").value.trim();
+  const email = document.getElementById("cf-email").value.trim();
   const company = document.getElementById("cf-company").value.trim();
-  const phone   = document.getElementById("cf-phone").value.trim();
+  const phone = document.getElementById("cf-phone").value.trim();
   const subject = document.getElementById("cf-subject").value;
-  const msg     = document.getElementById("cf-msg").value.trim();
+  const msg = document.getElementById("cf-msg").value.trim();
 
   // Target the native PHP script directly inside public_html
   fetch(`/send-mail.php`, {
@@ -505,36 +505,36 @@ function cfSubmit() {
           "<strong>Submission summary</strong>Name: " + name +
           "<br>Email: " + email +
           (company ? "<br>Company: " + company : "") +
-          (phone   ? "<br>Phone: "   + phone   : "") +
+          (phone ? "<br>Phone: " + phone : "") +
           "<br>Topic: " + subject;
-        document.getElementById("cf-formArea").style.display     = "none";
+        document.getElementById("cf-formArea").style.display = "none";
         document.getElementById("cf-successState").style.display = "block";
         showNotif("Message sent!", "We'll be in touch with you soon.");
       } else {
-        btn.disabled  = false;
+        btn.disabled = false;
         btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
         showNotif("Something went wrong", "Please try again or contact us directly.");
       }
     })
     .catch(function () {
-      btn.disabled  = false;
+      btn.disabled = false;
       btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
       showNotif("Network error", "Please check your connection and try again.");
     });
 }
 
 function cfReset() {
-  document.getElementById("cf-formArea").style.display     = "block";
+  document.getElementById("cf-formArea").style.display = "block";
   document.getElementById("cf-successState").style.display = "none";
   const btn = document.getElementById("cf-submitBtn");
-  btn.disabled  = false;
+  btn.disabled = false;
   btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>Send message';
-  ["ff-name","ff-email","ff-subject","ff-msg"].forEach(id => {
-    document.getElementById(id).classList.remove("err","ok");
+  ["ff-name", "ff-email", "ff-subject", "ff-msg"].forEach(id => {
+    document.getElementById(id).classList.remove("err", "ok");
   });
   document.getElementById("cf-consent-err").style.display = "none";
-  document.getElementById("cf-msg-err").style.display     = "none";
-  document.getElementById("cf-char").textContent          = "0 / 1000";
+  document.getElementById("cf-msg-err").style.display = "none";
+  document.getElementById("cf-char").textContent = "0 / 1000";
   document.querySelectorAll(".cf-input,.cf-select,.cf-textarea").forEach(el => (el.value = ""));
   document.getElementById("cf-consent").checked = false;
 }
@@ -549,12 +549,12 @@ function initHeroSlider() {
   const section = document.getElementById("heroSliderSection");
   if (!section) return;
 
-  const slides   = Array.from(section.querySelectorAll(".hero-slide"));
+  const slides = Array.from(section.querySelectorAll(".hero-slide"));
   const dotsWrap = section.querySelector(".hero-slider-dots");
   if (!slides.length) return;
 
   let current = 0;
-  let timer   = null;
+  let timer = null;
 
   slides.forEach(slide => {
     const bg = slide.dataset.bg;
@@ -588,7 +588,7 @@ function initHeroSlider() {
   slides[0].classList.add("active");
 
   function startTimer() { timer = setInterval(next, INTERVAL); }
-  function stopTimer()  { clearInterval(timer); }
+  function stopTimer() { clearInterval(timer); }
 
   startTimer();
 
@@ -649,8 +649,13 @@ class SiteFooter extends HTMLElement {
             </div>
           </div>
           <div class="footer-bottom">
-            <p>&copy; 2026 Beyond Data. All rights reserved.</p>
-            <div class="footer-bottom-links"><a href="#" onclick="event.preventDefault(); openPP()">Privacy Policy</a></div>
+            <div class="footer-bottom-links" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;width:100%">
+              <p>&copy; 2026 Beyond Data. All rights reserved.</p>
+              <a href="https://eg.linkedin.com/company/beyond-data-security" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;transition:color 0.3s;cursor:pointer;color:#888888" onmouseover="this.style.color='white'" onmouseout="this.style.color='#888888'">
+                <i class="fa-brands fa-linkedin-in" style="font-size:20px"></i>
+              </a>
+              <a href="#" onclick="event.preventDefault(); openPP()">Privacy Policy</a>
+            </div>
           </div>
         </div>
       </footer>`;
@@ -660,9 +665,21 @@ class SiteFooter extends HTMLElement {
 /* ── Privacy Policy Modal ────────────────────────────────── */
 function openPP() {
   const iframe = document.getElementById('ppIframe');
-  if (!iframe.src || iframe.src === window.location.href) {
-    iframe.src = 'assets/Beyond_Data_Privacy_Policy.pdf#toolbar=0&navpanes=0&scrollbar=0';
-  }
+  const pdfUrl = 'assets/Beyond_Data_Privacy_Policy.pdf';
+
+  // Fetch the PDF as a blob so Bluehost's Content-Disposition header
+  // can't force a download instead of inline rendering.
+  fetch(pdfUrl)
+    .then(res => res.blob())
+    .then(blob => {
+      if (iframe._blobUrl) URL.revokeObjectURL(iframe._blobUrl);
+      iframe._blobUrl = URL.createObjectURL(blob);
+      iframe.src = iframe._blobUrl + '#toolbar=0&navpanes=0&scrollbar=0';
+    })
+    .catch(() => {
+      iframe.src = pdfUrl + '#toolbar=0&navpanes=0&scrollbar=0';
+    });
+
   document.getElementById('ppOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -672,11 +689,11 @@ function closePP() {
   document.body.style.overflow = '';
 }
 
-document.getElementById('ppOverlay').addEventListener('click', function(e) {
+document.getElementById('ppOverlay').addEventListener('click', function (e) {
   if (e.target === this) closePP();
 });
 
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') closePP();
 });
 
@@ -685,7 +702,7 @@ customElements.define('site-footer', SiteFooter);
 /* ── Load hero slider component ──────────────────────────── */
 async function loadComponents() {
   try {
-    const res  = await fetch('components/hero-slider.html');
+    const res = await fetch('components/hero-slider.html');
     const html = await res.text();
     document.getElementById('heroSliderSlot').innerHTML = html;
     initHeroSlider();
