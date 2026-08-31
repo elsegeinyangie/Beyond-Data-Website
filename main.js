@@ -282,7 +282,7 @@ async function show(page, shouldUpdateUrl = true) {
       const html = await res.text();
       view.innerHTML = html;
       loadedPages.add(normalizedPage);
-      if (normalizedPage === 'hub') {
+      if (normalizedPage === 'knowledge-hub' || normalizedPage === 'hub') {
         if (window._fbReady) {
           loadHubContent();
         } else {
@@ -292,7 +292,7 @@ async function show(page, shouldUpdateUrl = true) {
     } catch (e) {
       view.innerHTML = '<p style="color:red;padding:2rem">Failed to load page.</p>';
     }
-  } else if (normalizedPage === 'hub') {
+  } else if (normalizedPage === 'knowledge-hub' || normalizedPage === 'hub') {
     if (window._fbReady) loadHubContent();
   }
 
