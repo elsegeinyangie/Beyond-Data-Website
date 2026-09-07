@@ -120,6 +120,7 @@ async function loadHubContent() {
             </div>
           </div>`;
       }).join('');
+      openRequestedHubDownload();
     }
   } catch (e) {
     if (loadingEl) loadingEl.textContent = 'Failed to load resources.';
@@ -132,6 +133,30 @@ window._hubPendingDownload = null;
 function openHubGate(fileId, fileTitle, fileType) {
   window._hubPendingDownload = { fileId, fileTitle, fileType };
   openGate(fileTitle);
+}
+
+async function copyHubDownloadLink() {
+  const pending = window._hubPendingDownload;
+  if (!pending) return;
+
+  const link = new URL(window.location.href);
+  link.search = '';
+  link.searchParams.set('download', pending.fileId);
+
+  try {
+    await navigator.clipboard.writeText(link.href);
+    showNotif('Link copied', 'The document download form link is ready to share.');
+  } catch (err) {
+    showNotif('Copy failed', 'Please copy the link from your browser address bar.');
+  }
+}
+
+function openRequestedHubDownload() {
+  const fileId = new URLSearchParams(window.location.search).get('download');
+  if (!fileId) return;
+
+  const cardButton = document.querySelector(`[onclick*="${fileId}"]`);
+  if (cardButton) cardButton.click();
 }
 
 async function completeHubDownload(userName, userEmail, userCompany) {
