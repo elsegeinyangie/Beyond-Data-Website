@@ -269,6 +269,7 @@ const ROUTE_MAP = {
   services: '/services',
   'knowledge-hub': '/knowledge-hub',
   contact: '/contact',
+  'technology-alliances': '/technology-alliances',
 };
 
 function getPageFromPath(pathname = window.location.pathname) {
@@ -329,7 +330,7 @@ async function show(page, shouldUpdateUrl = true) {
   }
 
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const navMap = { home: 0, solutions: 1, services: 2, 'knowledge-hub': 3 };
+  const navMap = { home: 0, services: 1, solutions: 2, 'knowledge-hub': 3 };
   const links = document.querySelectorAll('.nav-links > a');
   if (navMap[normalizedPage] !== undefined) links[navMap[normalizedPage]].classList.add('active');
 }
@@ -651,10 +652,10 @@ class SiteFooter extends HTMLElement {
             <div class="footer-col">
               <h4 style="color: #00c2ff;">Solutions</h4>
               <ul>
-                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-1').scrollIntoView({behavior:'smooth'}), 100)">Cyber Threat Intelligence</a></li>
-                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-2').scrollIntoView({behavior:'smooth'}), 100)">Digital Risk Protection</a></li>
-                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-3').scrollIntoView({behavior:'smooth'}), 100)">Blockchain &amp; Web 3.0</a></li>
-                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-4').scrollIntoView({behavior:'smooth'}), 100)">Intelligence Fusion</a></li>
+                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-1').scrollIntoView({behavior:'smooth'}), 100)">Unified Cyber Risk Intelligence</a></li>
+                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-2').scrollIntoView({behavior:'smooth'}), 100)">Converged Digital Risk Intelligence</a></li>
+                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-3').scrollIntoView({behavior:'smooth'}), 100)">Open Source Intelligence</a></li>
+                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-4').scrollIntoView({behavior:'smooth'}), 100)">Investigation &amp; Fusion</a></li>
               </ul>
             </div>
             <div class="footer-col">
@@ -662,14 +663,15 @@ class SiteFooter extends HTMLElement {
               <ul>
                 <li><a onclick="show('about')">About Us</a></li>
                 <li><a onclick="show('services')">Services</a></li>
+                <li><a onclick="show('technology-alliances')">Technology Alliances</a></li>
                 <li><a onclick="show('knowledge-hub')">Knowledge Hub</a></li>
                 <li><a onclick="show('contact')">Contact</a></li>
               </ul>
             </div>
             <div class="footer-col">
               <h4 style="color: #00c2ff;">Global offices</h4>
-              <div class="office"><strong>Middle East</strong>Dubai, UAE</div>
-              <div class="office"><strong>Africa</strong>Cairo, Egypt</div>
+              <div class="office"><strong>GCC</strong>Dubai, UAE</div>
+              <div class="office"><strong>ME &amp; AFRICA</strong>Cairo, Egypt</div>
               <div class="office"><strong>Australasia</strong>Sydney, Australia</div>
             </div>
           </div>

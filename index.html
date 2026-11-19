@@ -25,15 +25,15 @@
       </div>
       <nav class="nav-links" id="mainNav">
         <a id="nav-home" class="active" onclick="show('home')">Home</a>
-        <a onclick="show('solutions')">Solutions</a>
         <a onclick="show('services')">Services</a>
+        <a onclick="show('solutions')">Solutions</a>
         <a onclick="show('knowledge-hub')">Knowledge Hub</a>
         <div class="dropdown">
-          <button class="dropbtn">Company</button>
+          <button class="dropbtn">Company<span aria-hidden="true">▾</span></button>
           <div class="dropdown-content">
             <div class="dropdown-content-inner">
               <a onclick="show('about')">About</a>
-              <a onclick="goToPartners()">Partners</a>
+              <a onclick="show('technology-alliances')">Technology Alliances</a>
             </div>
           </div>
         </div>
@@ -146,12 +146,6 @@
       <div class="pp-modal-header">
         <h3>
           <svg style="
-                width: 18px;
-                height: 18px;
-                stroke: #00c2ff;
-                fill: none;
-                stroke-width: 1.5;
-                stroke-linecap: round;
                 stroke-linejoin: round;
               " viewBox="0 0 24 24">
             <path
@@ -186,23 +180,184 @@
     <!-- Partner bar -->
     <div class="trust-bar" id="partners">
       <div class="trust-inner">
-        <span class="trust-lbl">Trusted Technology Partners</span>
+        <span class="trust-lbl">Technology Alliances</span>
         <div class="trust-logos">
           <div class="trust-track">
-            <img src="assets/partners/1.png" alt="ThreatVerse" id="partners-1" />
-            <img src="assets/partners/2.png" alt="SAYARI" id="partners-2" />
-            <img src="assets/partners/3.png" alt="Praedisuium" id="partners-3" />
-            <img src="assets/partners/4.png" alt="Cogniware" id="partners-4" />
-            <img src="assets/partners/5.png" alt="GROUP-IB" id="partners-5" />
-            <img src="assets/partners/6.png" alt="Sas" id="partners-6" />
-            <img src="assets/partners/7.png" alt="MEDUSA" id="partners-7" />
-            <img src="assets/partners/8.png" alt="Counter Craft" id="partners-8" />
-            <img src="assets/partners/9.png" alt="Phisme Cofense" id="partners-9" />
-            <img src="assets/partners/10.png" alt="positive technologies" id="partners-10" />
-            <img src="assets/partners/11.png" alt="Chainalysis" id="partners-11" />
-            <img src="assets/partners/12.png" alt="BlackBerry" id="partners-12" />
-            <img src="assets/partners/13.png" alt="DeXpose" id="partners-13" />
-            <img src="assets/partners/14.png" alt="Sonic Wall" id="partners-14" />
+            <img src="assets/partners/1-threatverse.png" alt="ThreatVerse" id="partners-1" />
+            <img src="assets/partners/2-sayari.png" alt="SAYARI" id="partners-2" />
+            <img src="assets/partners/3-praesidiium.png" alt="Praedisuium" id="partners-3" />
+            <img src="assets/partners/4-cogniware.png" alt="Cogniware" id="partners-4" />
+            <img src="assets/partners/5-group-ib.png" alt="GROUP-IB" id="partners-5" />
+            <img src="assets/partners/6-sas.png" alt="sas" id="partners-6" />
+            <!-- <img src="assets/partners/7.png" alt="MEDUSA" id="partners-7" /> -->
+            <img src="assets/partners/7-counter-craft.png" alt="Counter Craft" id="partners-7" />
+            <img src="assets/partners/8-cofense.png" alt="Cofense" id="partners-8" />
+            <!-- <img src="assets/partners/10.png" alt="positive technologies" id="partners-10" /> -->
+            <img src="assets/partners/9-chainalysis.png" alt="Chainalysis" id="partners-9" />
+            <!-- <img src="assets/partners/12.png" alt="BlackBerry" id="partners-12" /> -->
+            <!-- <img src="assets/partners/13.png" alt="DeXpose" id="partners-13" /> -->
+            <img src="assets/partners/10-sonicwall.png" alt="Sonic Wall" id="partners-10" />
+            <img src="assets/partners/11-PSG.png" alt="PSG" id="partners-11" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services grid -->
+    <div class="section">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 44px">
+          <div class="sec-tag">Our services</div>
+          <h2 class="sec-title">Cyber Risk Services, from Web 2.0 to Web 3.0</h2>
+          <p style="font-size: 15px; color: var(--text-muted); max-width: 620px; margin: 0 auto">
+            From the boardroom to the investigation, for Web 2.0 and Web 3.0.
+          </p>
+        </div>
+        <div class="sol-grid services-grid">
+          <div class="sol-card">
+            <div class="sol-num">01</div>
+            <!-- <div class="card-icon">
+              <img src="assets/icons/cyber_defense_service_icon.png" alt="" />
+            </div> -->
+            <h3 class="solutions-card-title">Cyber Risk Oversight &amp; Governance</h3>
+            <p class="solutions-card-desc">
+              Board-level visibility of cyber risk, with the governance, education
+              and regulatory readiness to act on it.
+            </p>
+            <div class="sol-link" onclick="
+                  show('services');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('services-oversight')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                 ">
+              Learn more →
+            </div>
+          </div>
+
+          <div class="sol-card">
+            <div class="sol-num">02</div>
+            <!-- <div class="card-icon">
+              <img src="assets/icons/drp_service_icon.png" alt="" />
+            </div> -->
+            <h3 class="solutions-card-title">Exposure Intelligence Assessment</h3>
+            <p class="solutions-card-desc">
+              Attack surface, breaches, scams and phishing, impersonation,
+              trademark violation and negative campaigning.
+            </p>
+            <div class="sol-link" onclick="
+                  show('services');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('services-exposure')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                 ">
+              Learn more →
+            </div>
+          </div>
+
+          <div class="sol-card">
+            <div class="sol-num">03</div>
+            <!-- <div class="card-icon">
+              <img src="assets/icons/digital-risk-solution-icon.png" alt="" />
+            </div> -->
+            <h3 class="solutions-card-title">
+              Third-Party &amp; Counterparty Risk Intelligence
+            </h3>
+            <p class="solutions-card-desc">
+              The cyber and integrity risk of the organisations you depend on,
+              invest in or transact with.
+            </p>
+            <div class="sol-link" onclick="
+                  show('services');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('services-third-party')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                 ">
+              Learn more →
+            </div>
+          </div>
+
+          <div class="sol-card">
+            <div class="sol-num">04</div>
+            <!-- <div class="card-icon">
+              <img src="assets/icons/cti-solution-icon.png" alt="" />
+            </div> -->
+            <h3 class="solutions-card-title">Cyber Resilience &amp; Risk Quantification</h3>
+            <p class="solutions-card-desc">
+              How well you would withstand an attack, and what cyber risk could
+              cost you in financial terms.
+            </p>
+            <div class="sol-link" onclick="
+                  show('services');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('services-resilience')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                 ">
+              Learn more →
+            </div>
+          </div>
+
+          <div class="sol-card">
+            <div class="sol-num">05</div>
+            <!-- <div class="card-icon">
+              <img src="assets/icons/data-fusion-solution-icon.png" alt="" />
+            </div> -->
+            <h3 class="solutions-card-title">Cyber Crisis Simulation &amp; Training</h3>
+            <p class="solutions-card-desc">
+              Board crisis simulations and hands-on training for analysts and
+              investigators.
+            </p>
+            <div class="sol-link" onclick="
+                  show('services');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('services-crisis')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                 ">
+              Learn more →
+            </div>
+          </div>
+
+          <div class="sol-card">
+            <div class="sol-num">06</div>
+            <!-- <div class="card-icon">
+              <img src="assets/icons/blockchain-solution-icon.png" alt="" />
+            </div> -->
+            <h3 class="solutions-card-title">Investigations &amp; Asset Tracing</h3>
+            <p class="solutions-card-desc">
+              Crypto asset tracing and intelligence-led fraud, sanctions and
+              trade investigations.
+            </p>
+            <div class="sol-link" onclick="
+                  show('services');
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('services-investigations')
+                        .scrollIntoView({ behavior: 'smooth' }),
+                    100,
+                  );
+                 ">
+              Learn more →
+            </div>
           </div>
         </div>
       </div>
@@ -221,11 +376,11 @@
             <div class="card-icon">
               <img src="assets/icons/cti-solution-icon.png" alt="" />
             </div>
-            <h3 class="solutions-card-title">Cyber Threat Intelligence</h3>
+            <h3 class="solutions-card-title">Unified Cyber Risk Intelligence</h3>
             <p class="solutions-card-desc">
-              Track threat actors, analyse TTPs, and automate incident
-              response using intelligence from open, deep, and dark web
-              sources.
+              Track threat actors and TTPs, vulnerabilities and exposures across open, 
+              deep and dark web sources, 
+              in one view of the cyber risk that matters to you.
             </p>
             <div class="sol-link" onclick="
                   show('solutions');
@@ -246,10 +401,9 @@
             <div class="card-icon">
               <img src="assets/icons/digital-risk-solution-icon.png" alt="" />
             </div>
-            <h3 class="solutions-card-title">Digital Risk Intelligence</h3>
+            <h3 class="solutions-card-title">Converged Digital Risk Intelligence</h3>
             <p class="solutions-card-desc">
-              Monitor your brand, executives, and digital assets — detect
-              impersonation, phishing, and data leaks before they escalate.
+              Protect your brand, executives and digital assets across the surface web, social media, deep and dark web, messaging apps and app stores.
             </p>
             <div class="sol-link" onclick="
                   show('solutions');
@@ -270,11 +424,11 @@
               <img src="assets/icons/blockchain-solution-icon.png" alt="" />
             </div>
             <h3 class="solutions-card-title">
-              Blockchain &amp; Web 3.0 Intelligence
+              Open Source Intelligence
             </h3>
             <p style="font-size: 13px; color: var(--text-muted)">
-              Cross-chain fund tracing, AML compliance, and smart contract
-              security — full transparency in the decentralised economy.
+             Collect and analyse intelligence across the surface, 
+             deep and dark web for analysts and investigators.
             </p>
             <div class="sol-link" onclick="
                   show('solutions');
@@ -294,10 +448,10 @@
             <div class="card-icon">
               <img src="assets/icons/data-fusion-solution-icon.png" alt="" />
             </div>
-            <h3 class="solutions-card-title">Intelligence Fusion</h3>
+            <h3 class="solutions-card-title">Intelligence &amp; Fusion</h3>
             <p class="solutions-card-desc">
-              OSINT, CDR/IPDR analytics, list screening, and investigative
-              tools — fusing fragmented data into actionable intelligence.
+              OSINT, CDR, Crypto Intelligence, Trade Intelligence and Cyber Intelligence, 
+              fused into actionable investigations for Web 2.0 and Web 3.0 cases.
             </p>
             <div class="sol-link" onclick="
                   show('solutions');
@@ -336,10 +490,10 @@
               A Decade of Global Excellence
             </h3>
             <p style="font-size: 13px; color: var(--text-muted)">
-              Founded in 2013, Beyond Data is a premier value-added
-              distributor with deep domain knowledge in intelligence,
-              investigation and data fusion, delivering niche solutions and
-              expert services to government entities and large enterprises.
+              Founded in 2013, Beyond Data is a cyber risk 
+              and intelligence solutions and services provider with 
+              deep domain knowledge in intelligence, investigation and data fusion, 
+              serving government entities, large enterprises and Web 3.0 organisations.
             </p>
           </div>
           <div class="card">
@@ -356,9 +510,9 @@
             </h3>
             <p style="font-size: 13px; color: var(--text-muted)">
               Our integrative solutions and service portfolio delivers
-              reliable and robust systems leveraging AI-powered engines to
-              fuse fragmented data to transform disparate clues into
-              comprehensive, actionable investigations.
+               reliable and robust systems leveraging AI-powered engines to fuse 
+               fragmented data to transform 
+              disparate clues into comprehensive, actionable investigations.
             </p>
           </div>
           <div class="card">
@@ -376,7 +530,7 @@
             <p style="font-size: 13px; color: var(--text-muted)">
               We partner with a premier network of international technology
               vendors ensuring our clients have access to the world's most
-              advanced defense and investigation capabilities
+              advanced defense and investigation capabilities.
             </p>
           </div>
         </div>
@@ -393,6 +547,7 @@
   <div class="view" id="view-services"></div>
   <div class="view" id="view-knowledge-hub"></div>
   <div class="view" id="view-contact"></div>
+  <div class="view" id="view-technology-alliances"></div>
 
   <div id="notification" class="notification" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="notification__icon"></div>
