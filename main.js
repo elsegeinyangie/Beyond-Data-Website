@@ -272,19 +272,22 @@ const ROUTE_MAP = {
   'technology-alliances': '/technology-alliances',
 };
 
-function getPageFromPath(pathname = window.location.pathname) {
-  const cleaned = pathname.replace(/^\/+|\/+$/g, '');
+function getPageFromPath() {
+  const hashRoute = window.location.hash.replace(/^#\/?/, '').replace(/\/+$/, '');
+  const cleaned = hashRoute || window.location.pathname.replace(/^\/+|\/+$/g, '');
   if (!cleaned) return 'home';
   if (cleaned === 'hub') return 'knowledge-hub';
-  if (cleaned === 'knowledge-hub') return 'knowledge-hub';
   const match = Object.entries(ROUTE_MAP).find(([, route]) => route === `/${cleaned}`);
   return match ? match[0] : 'home';
 }
 
 function updateUrl(page) {
-  const nextPath = ROUTE_MAP[page] || '/';
-  if (window.location.pathname !== nextPath) {
-    window.history.pushState({ page }, '', nextPath);
+  const route = ROUTE_MAP[page] || '/';
+  const hash = page === 'home' ? '' : `#${route}`;
+  if (window.location.pathname !== '/') {
+    window.history.replaceState({ page }, '', `/${hash}`);
+  } else if (window.location.hash !== hash) {
+    window.history.pushState({ page }, '', `/${hash}`);
   }
 }
 
@@ -335,11 +338,29 @@ async function show(page, shouldUpdateUrl = true) {
   if (navMap[normalizedPage] !== undefined) links[navMap[normalizedPage]].classList.add('active');
 }
 
+async function goToSection(page, id) {
+  await show(page, true);
+  const target = document.getElementById(id);
+  if (!target) return;
+  requestAnimationFrame(() => {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
 window.addEventListener('popstate', () => {
-  show(getPageFromPath(window.location.pathname), false);
+  show(getPageFromPath(), false);
 });
 
-show(getPageFromPath(window.location.pathname), false);
+window.addEventListener('hashchange', () => {
+  show(getPageFromPath(), false);
+});
+
+const initialPage = getPageFromPath();
+if (window.location.pathname !== '/') {
+  const initialHash = initialPage === 'home' ? '' : `#${ROUTE_MAP[initialPage]}`;
+  window.history.replaceState({ page: initialPage }, '', `/${initialHash}`);
+}
+show(initialPage, false);
 
 
 /* ── Partners scroll ─────────────────────────────────────── */
@@ -652,10 +673,10 @@ class SiteFooter extends HTMLElement {
             <div class="footer-col">
               <h4 style="color: #00c2ff;">Solutions</h4>
               <ul>
-                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-1').scrollIntoView({behavior:'smooth'}), 100)">Unified Cyber Risk Intelligence</a></li>
-                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-2').scrollIntoView({behavior:'smooth'}), 100)">Converged Digital Risk Intelligence</a></li>
-                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-3').scrollIntoView({behavior:'smooth'}), 100)">Open Source Intelligence</a></li>
-                <li><a onclick="show('solutions'); setTimeout(() => document.getElementById('solution-4').scrollIntoView({behavior:'smooth'}), 100)">Investigation &amp; Fusion</a></li>
+                <li><a onclick="goToSection('solutions', 'solution-1')">Cyber Threat Intelligence</a></li>
+                <li><a onclick="goToSection('solutions', 'solution-2')">Digital Risk Intelligence</a></li>
+                <li><a onclick="goToSection('solutions', 'solution-3')">Blockchain &amp; Web 3.0 Intelligence</a></li>
+                <li><a onclick="goToSection('solutions', 'solution-4')">Intelligence Fusion</a></li>
               </ul>
             </div>
             <div class="footer-col">

@@ -205,7 +205,7 @@
 
     <!-- Services grid -->
     <div class="section">
-      <div class="container">
+      <div class="container container-wide">
         <div class="text-center" style="margin-bottom: 44px">
           <div class="sec-tag">Our services</div>
           <h2 class="sec-title">Cyber Risk Services, from Web 2.0 to Web 3.0</h2>
@@ -224,16 +224,7 @@
               Board-level visibility of cyber risk, with the governance, education
               and regulatory readiness to act on it.
             </p>
-            <div class="sol-link" onclick="
-                  show('services');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('services-oversight')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                 ">
+            <div class="sol-link" onclick="goToSection('services', 'services-oversight');">
               Learn more →
             </div>
           </div>
@@ -248,16 +239,7 @@
               Attack surface, breaches, scams and phishing, impersonation,
               trademark violation and negative campaigning.
             </p>
-            <div class="sol-link" onclick="
-                  show('services');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('services-exposure')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                 ">
+            <div class="sol-link" onclick="goToSection('services', 'services-exposure');">
               Learn more →
             </div>
           </div>
@@ -274,16 +256,7 @@
               The cyber and integrity risk of the organisations you depend on,
               invest in or transact with.
             </p>
-            <div class="sol-link" onclick="
-                  show('services');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('services-third-party')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                 ">
+            <div class="sol-link" onclick="goToSection('services', 'services-third-party');">
               Learn more →
             </div>
           </div>
@@ -298,16 +271,7 @@
               How well you would withstand an attack, and what cyber risk could
               cost you in financial terms.
             </p>
-            <div class="sol-link" onclick="
-                  show('services');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('services-resilience')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                 ">
+            <div class="sol-link" onclick="goToSection('services', 'services-resilience');">
               Learn more →
             </div>
           </div>
@@ -322,16 +286,7 @@
               Board crisis simulations and hands-on training for analysts and
               investigators.
             </p>
-            <div class="sol-link" onclick="
-                  show('services');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('services-crisis')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                 ">
+            <div class="sol-link" onclick="goToSection('services', 'services-crisis');">
               Learn more →
             </div>
           </div>
@@ -346,16 +301,7 @@
               Crypto asset tracing and intelligence-led fraud, sanctions and
               trade investigations.
             </p>
-            <div class="sol-link" onclick="
-                  show('services');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('services-investigations')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                 ">
+            <div class="sol-link" onclick="goToSection('services', 'services-investigations');">
               Learn more →
             </div>
           </div>
@@ -378,20 +324,11 @@
             </div>
             <h3 class="solutions-card-title">Unified Cyber Risk Intelligence</h3>
             <p class="solutions-card-desc">
-              Track threat actors and TTPs, vulnerabilities and exposures across open, 
-              deep and dark web sources, 
-              in one view of the cyber risk that matters to you.
+              Track threat actors, analyse TTPs, and automate incident
+              response using intelligence from open, deep, and dark web
+              sources.
             </p>
-            <div class="sol-link" onclick="
-                  show('solutions');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('solution-1')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                ">
+            <div class="sol-link" onclick="goToSection('solutions', 'solution-1');">
               Learn more →
             </div>
           </div>
@@ -403,18 +340,10 @@
             </div>
             <h3 class="solutions-card-title">Converged Digital Risk Intelligence</h3>
             <p class="solutions-card-desc">
-              Protect your brand, executives and digital assets across the surface web, social media, deep and dark web, messaging apps and app stores.
+              Monitor your brand, executives, and digital assets — detect
+              impersonation, phishing, and data leaks before they escalate.
             </p>
-            <div class="sol-link" onclick="
-                  show('solutions');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('solution-2')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                ">
+            <div class="sol-link" onclick="goToSection('solutions', 'solution-2');">
               Learn more →
             </div>
           </div>
@@ -424,22 +353,13 @@
               <img src="assets/icons/blockchain-solution-icon.png" alt="" />
             </div>
             <h3 class="solutions-card-title">
-              Open Source Intelligence
+              Blockchain &amp; Web 3.0 Intelligence
             </h3>
             <p style="font-size: 13px; color: var(--text-muted)">
-             Collect and analyse intelligence across the surface, 
-             deep and dark web for analysts and investigators.
+              Cross-chain fund tracing, AML compliance, and smart contract
+              security — full transparency in the decentralised economy.
             </p>
-            <div class="sol-link" onclick="
-                  show('solutions');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('solution-3')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                ">
+            <div class="sol-link" onclick="goToSection('solutions', 'solution-3');">
               Learn more →
             </div>
           </div>
@@ -450,19 +370,10 @@
             </div>
             <h3 class="solutions-card-title">Intelligence &amp; Fusion</h3>
             <p class="solutions-card-desc">
-              OSINT, CDR, Crypto Intelligence, Trade Intelligence and Cyber Intelligence, 
-              fused into actionable investigations for Web 2.0 and Web 3.0 cases.
+              OSINT, CDR/IPDR analytics, list screening, and investigative
+              tools — fusing fragmented data into actionable intelligence.
             </p>
-            <div class="sol-link" onclick="
-                  show('solutions');
-                  setTimeout(
-                    () =>
-                      document
-                        .getElementById('solution-4')
-                        .scrollIntoView({ behavior: 'smooth' }),
-                    100,
-                  );
-                ">
+            <div class="sol-link" onclick="goToSection('solutions', 'solution-4');">
               Learn more →
             </div>
           </div>
